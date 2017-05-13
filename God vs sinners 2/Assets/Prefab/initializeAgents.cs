@@ -8,9 +8,10 @@ public class initializeAgents : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        for (int i = 0; i<5; i++)
+        for (int i = 0; i<10; i++)
         {
-            Instantiate(Agent1, transform.position, transform.rotation);
+            Transform a = Instantiate(Agent1, transform.position, transform.rotation);
+            a.parent = GameObject.FindGameObjectWithTag("Table").transform;
         }
     }
 

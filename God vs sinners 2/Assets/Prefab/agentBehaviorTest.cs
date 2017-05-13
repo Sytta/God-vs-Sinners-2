@@ -26,9 +26,6 @@ public static class globalVariablesTemp
     }
 }
 
-
-
-
 public class agentClassGlobal
 {
     public long agentID;
@@ -47,9 +44,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(-5.0f, 5.0f);
+        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX, globalVariablesTemp.maxBoardX);
         pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(-5.0f, 5.0f);
+        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY, globalVariablesTemp.maxBoardY);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -81,7 +78,7 @@ public class agentBehaviorTest : MonoBehaviour
         // calcutate new position
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
 
-        gameObject.transform.position = self.pos;
+        gameObject.transform.localPosition = self.pos;
 
         Vector3G posVector3G = Utilities.convert(self.pos);
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
