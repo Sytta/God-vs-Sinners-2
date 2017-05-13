@@ -8,9 +8,6 @@ public class Menu : MonoBehaviour
 
     private Color buttonDisabled;
     private Color buttonEnabled;
-
-    private int[] playerButtonUpDown;
-    
     public Button buttonPlay;
     public Button buttonQuit;
     public string buttonSelected = "Play";

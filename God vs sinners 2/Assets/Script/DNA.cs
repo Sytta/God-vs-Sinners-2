@@ -60,7 +60,7 @@ public class DNA {
     public static DNA Reproduce(DNA dna1, DNA dna2)
     {
         // Both are the same sex
-        if (dna1.isMale() == dna2.isMale())
+        if (dna1.IsMale() == dna2.IsMale())
         {
             return null;
         }
@@ -75,7 +75,7 @@ public class DNA {
     {
         DNA mom, dad;
 
-         if (dna1.isMale())
+         if (dna1.IsMale())
         {
             mom = dna2;
             dad = dna1;
@@ -98,7 +98,7 @@ public class DNA {
         this.dnaCharacteristics.Add(dnaTypes[dnaIndex], Color.Lerp(momEyeColor, dadEyeColor, Random.value));
 
         // BodyType 2
-        this.dnaCharacteristics.Add(dnaTypes[++dnaIndex], this.isMale() ? dad.dnaCharacteristics["bodyType"] : mom.dnaCharacteristics["bodyType"]);
+        this.dnaCharacteristics.Add(dnaTypes[++dnaIndex], this.IsMale() ? dad.dnaCharacteristics["bodyType"] : mom.dnaCharacteristics["bodyType"]);
  
         // Bodyshapes - index 3-5
         for (++ dnaIndex; dnaIndex <= LAST_BODY_INDEX; ++ dnaIndex)
@@ -127,14 +127,26 @@ public class DNA {
 
     }
 
-    public bool isMale()
+    public bool IsMale()
     {
         return (bool)this.dnaCharacteristics["gender"];
     }
 
-    public int getMorality()
+    public int GetMorality()
     {
         return (int)this.dnaCharacteristics["morality"];
+    }
+
+    public void Print()
+    {
+        string output = "";
+
+        foreach (string dnaChar in dnaCharacteristics.Keys)
+        {
+            output += dnaChar + " " + dnaCharacteristics[dnaChar] + " ";
+        }
+
+        Debug.Log(output);
     }
 
 }

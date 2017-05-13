@@ -18,6 +18,11 @@ public class agentClassGlobal
 
     public int morality;
 
+    // Reproduction
+    private agentBehaviorTest partner;
+    private bool reproducing;
+
+
     // DNA
     public DNA dna;
 
@@ -37,9 +42,8 @@ public class agentClassGlobal
         velocity.y = 0.0f;
         velocity.z = 0.0f;
 
-        //dna = new DNA();
-
-        //morality = dna.getMorality();
+        // By default every AI is single
+        reproducing = false;
     }
 
 }
@@ -61,7 +65,8 @@ public class agentBehaviorTest : MonoBehaviour
         selfSimObject = Factory.generate(self);
         self.pos = gameObject.transform.localPosition;
         self.dna = new DNA();
-        self.morality = self.dna.getMorality();
+        self.morality = self.dna.GetMorality();
+        // self.dna.Print();
     }
 
     // Update is called once per frame
