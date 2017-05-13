@@ -58,6 +58,7 @@ public class agentClassGlobal
 
         morality = 0.0f;
     }
+
 }
 
 public class agentBehaviorTest : MonoBehaviour
@@ -77,6 +78,20 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 output = new Vector3(1000.0f, 1000.0f, 1000.0f);
+
+        RaycastHit hitInfoCurrent;
+
+        if (Physics.Raycast(self.pos, self.velocity.normalized, out hitInfoCurrent, 20))
+        {
+            output = hitInfoCurrent.point;
+            if (Vector3.Distance(output, self.pos) < 0.1f) Destroy(gameObject);
+        }
+        else // CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
+        {
+            Destroy(gameObject);
+        }
+
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
