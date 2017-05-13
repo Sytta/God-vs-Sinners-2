@@ -38,7 +38,10 @@ public class agentClassGlobal
 
     public Vector3 velocity;
 
-    public float morality;
+    public int morality;
+
+    // DNA
+    public DNA dna;
 
     public agentClassGlobal()
     {
@@ -60,7 +63,9 @@ public class agentClassGlobal
         velocity.y = 0.0f;
         velocity.z = 0.0f;
 
-        morality = 0.0f;
+        //dna = new DNA();
+
+        //morality = dna.getMorality();
     }
 
 }
@@ -82,6 +87,8 @@ public class agentBehaviorTest : MonoBehaviour
     {
         selfSimObject = Factory.generate(self);
         self.pos = gameObject.transform.localPosition;
+        self.dna = new DNA();
+        self.morality = self.dna.getMorality();
     }
 
     // Update is called once per frame

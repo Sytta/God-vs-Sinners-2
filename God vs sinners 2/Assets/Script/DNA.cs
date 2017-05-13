@@ -132,4 +132,9 @@ public class DNA {
         return (bool)this.dnaCharacteristics["gender"];
     }
 
+    public int getMorality()
+    {
+        return (int)this.dnaCharacteristics["morality"];
+    }
+
 }
