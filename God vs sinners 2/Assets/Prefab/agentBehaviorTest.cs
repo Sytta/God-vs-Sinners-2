@@ -80,7 +80,7 @@ public class agentBehaviorTest : MonoBehaviour
         }
         else if (Mathf.Abs(gameObject.transform.localPosition.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.localPosition.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
         {
-            //Destroy(gameObject);
+            // Destroy(gameObject);
         }
 
         // calcutate new position
