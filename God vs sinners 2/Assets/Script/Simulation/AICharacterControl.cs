@@ -194,15 +194,12 @@ public class AICharacterControl : SimulationObject
     public override void interactPedestrian(SimulationObject s, double deltaT)
     {
 
-<<<<<<< HEAD
 
-        Vector3G deltaVec = position - s.position;
-=======
         //Transmit panic
         AICharacterControl agent = (AICharacterControl )s;
 
         Vector3G deltaVec = position-s.position;
->>>>>>> origin/master
+
         double distancePed1Ped2Sqrt = deltaVec.sqrMagnitude();
         if (this != s &&
             distancePed1Ped2Sqrt < minDistanceInteractionSqrt)

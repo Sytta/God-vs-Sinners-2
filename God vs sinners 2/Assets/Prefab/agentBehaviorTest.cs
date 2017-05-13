@@ -72,13 +72,11 @@ public class agentBehaviorTest : MonoBehaviour
     public AICharacterControl selfSimObject;
 
     public Vector3 debug;
-<<<<<<< HEAD
-=======
+
     public Vector3 debug2;
     public Vector3 debug3;
     public float debug4;
 
->>>>>>> origin/master
     // Use this for initialization
     void Start()
     {
@@ -98,16 +96,8 @@ public class agentBehaviorTest : MonoBehaviour
             output = hitInfoCurrent.point;
 
             if (Vector3.Distance(output, gameObject.transform.position) < 0.01f) Destroy(gameObject);
-<<<<<<< HEAD
-            //Debug.Log(output.ToString("F4"));
-=======
+        }
 
-        }
-        else if (Mathf.Abs(gameObject.transform.position.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.position.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
-        {
-            Destroy(gameObject);
->>>>>>> origin/master
-        }
 
  
 
@@ -116,15 +106,11 @@ public class agentBehaviorTest : MonoBehaviour
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
         self.pos.y = 0.51f;
-
-<<<<<<< HEAD
-        debug = self.velocity;
-=======
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
         debug3 = Utilities.convert(selfSimObject.V);
         debug4 = (float)selfSimObject.panic;
->>>>>>> origin/master
+
         gameObject.transform.localPosition = self.pos;
 
         Vector3G posVector3G = Utilities.convert(self.pos);

@@ -10,11 +10,7 @@ public class initializeAgents : MonoBehaviour {
 
     void Start () {
 
-<<<<<<< HEAD
         for (int i = 0; i < 256; i++)
-=======
-        for (int i = 0; i<200    ; i++)
->>>>>>> origin/master
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
@@ -41,13 +37,11 @@ public class initializeAgents : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         SimulationMap.Instance.Update(UnityEngine.Time.deltaTime);
-<<<<<<< HEAD
-=======
+
         if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
         {
             SimulationMap.Instance.fleeFrom(new Vector3(0, 0, 0), 15);
         }
 
->>>>>>> origin/master
     }
 }
