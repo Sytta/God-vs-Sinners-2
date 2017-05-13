@@ -64,6 +64,9 @@ public class Vector3
         z = v2.y;
     }
 
+    public Vector3(double x, double y, double z) : this(x, y, z)
+    {
+    }
 
     public static Vector3 operator +(Vector3 c1, Vector3 c2)
     {

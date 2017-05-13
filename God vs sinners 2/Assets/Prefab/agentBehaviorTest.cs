@@ -46,11 +46,15 @@ public class agentClassGlobal
     }
 }
 
+
 public class agentBehaviorTest : MonoBehaviour
 {
+    public Transform Agent1;
+
     // Use this for initialization
     void Start()
     {
+
 
     }
 
