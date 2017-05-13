@@ -13,14 +13,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1050
     y: 43
     width: 1680
     height: 967
+=======
+    x: 8
+    y: 51
+    width: 1536
+    height: 781
+>>>>>>> origin/master
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -121,7 +128,7 @@ MonoBehaviour:
   - {fileID: 13}
   - {fileID: 18}
   m_Selected: 0
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,9 +148,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1680
     height: 967
   m_MinSize: {x: 950, y: 300}
+=======
+    width: 1536
+    height: 781
+  m_MinSize: {x: 950, y: 542}
+>>>>>>> origin/master
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &7
 MonoBehaviour:
@@ -269,6 +282,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
+<<<<<<< HEAD
+=======
+  m_Script: {fileID: 12157, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AutoRepaintOnSceneChange: 0
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Services
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_DepthBufferBits: 0
+  m_Pos:
+    serializedVersion: 2
+    x: 1235
+    y: 100
+    width: 309
+    height: 710
+  m_InitialOpenURL: https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub
+  m_GlobalObjectTypeName: 
+  m_RegisteredViewURLs:
+  - https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub
+  m_RegisteredViewInstances:
+  - {fileID: 0}
+--- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+>>>>>>> origin/master
   m_Script: {fileID: 12111, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -309,10 +356,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1050
     y: 639
     width: 1234
     height: 349
+=======
+    x: 8
+    y: 542
+    width: 1223
+    height: 268
+>>>>>>> origin/master
   m_SearchFilter:
     m_NameFilter: 
     m_ClassNames: []
@@ -324,6 +378,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Prefab
   m_ViewMode: 1
   m_StartGridSize: 64
@@ -331,13 +386,28 @@ MonoBehaviour:
   - Assets/Prefab
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\vive\Documents\GitHub\GameJam2017Summer\God vs sinners
+=======
+    - Assets/Script/Simulation
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Script/Simulation
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: C:\Users\zihui\Documents\GitHub\GameJam2017Summer\God vs sinners
+>>>>>>> origin/master
     2
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 10250000
     m_LastClickedID: 9488
     m_ExpandedIDs: 00000000b024000000ca9a3bffffff7f
+=======
+    m_SelectedIDs: a4250000
+    m_LastClickedID: 9636
+    m_ExpandedIDs: 00000000fc2400005a25000000ca9a3bffffff7f
+>>>>>>> origin/master
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -365,7 +435,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b0240000
+    m_ExpandedIDs: 00000000fc240000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -475,15 +545,22 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1050
     y: 92
     width: 322
     height: 526
+=======
+    x: 8
+    y: 100
+    width: 301
+    height: 421
+>>>>>>> origin/master
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: ea250000
     m_LastClickedID: 0
-    m_ExpandedIDs: e4fbffff00000000
+    m_ExpandedIDs: defbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -528,10 +605,17 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1376
     y: 92
     width: 908
     height: 526
+=======
+    x: 313
+    y: 100
+    width: 918
+    height: 421
+>>>>>>> origin/master
   m_SceneLighting: 1
   lastFramingTime: 0
   m_2DMode: 0
@@ -679,6 +763,6 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 8
-    y: 718
-    width: 1366
-    height: 308
+    y: 542
+    width: 1223
+    height: 268
