@@ -37,7 +37,6 @@ public class AICharacterControl : SimulationObject
 
     public double accelToCenter = 0.5;
 
-
     public double defaultDist = 3;
 
     public Vector3G destination = null;

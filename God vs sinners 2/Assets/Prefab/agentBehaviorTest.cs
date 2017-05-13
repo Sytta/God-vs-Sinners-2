@@ -44,9 +44,13 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*25, globalVariablesTemp.maxBoardX * 25);
-        pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY* 25, globalVariablesTemp.maxBoardY * 25);
+        //pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*25, globalVariablesTemp.maxBoardX * 25);
+        //pos.y = 0.51f;
+        //pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY* 25, globalVariablesTemp.maxBoardY * 25);
+
+        pos.x = 0.0f;
+        pos.y = 0.0f;
+        pos.z = 0.0f;
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -72,6 +76,7 @@ public class agentBehaviorTest : MonoBehaviour
     void Start()
     {
         selfSimObject = Factory.generate(self);
+        self.pos = gameObject.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -89,12 +94,13 @@ public class agentBehaviorTest : MonoBehaviour
             //Debug.Log(output.ToString("F4"));
         }
 
+ 
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
-        self.pos.y = 0.5f;
+        self.pos.y = 0.51f;
 
         debug = self.velocity;
         gameObject.transform.localPosition = self.pos;
@@ -110,5 +116,13 @@ public class agentBehaviorTest : MonoBehaviour
         {
             self.velocity = new Vector3(0, 0, 0);
         }
+
+
+
+    }
+
+    void OnDestroy()
+    {
+        SimulationMap.Instance.remove(self.agentID);
     }
 }
