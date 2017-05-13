@@ -62,11 +62,12 @@ public class agentBehaviorTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        selfSimObject = Factory.generate(self);
         self.pos = gameObject.transform.localPosition;
         self.dna = new DNA();
+
         self.morality = self.dna.GetMorality();
-        // self.dna.Print();
+
+        selfSimObject = Factory.generate(self, self.dna);
     }
 
     // Update is called once per frame
@@ -112,19 +113,18 @@ public class agentBehaviorTest : MonoBehaviour
         {
             self.velocity = new Vector3(0, 0, 0);
         }
-        Vector3 v = gameObject.transform.rotation.eulerAngles;
-        if (v.x < 0) v.x += 360;
-        if (v.z < 0) v.z += 360;
-
-        if (v.x < 345 && v.x > 15)
-        {
-            v.x = 0;
-        }
-        if (v.z < 345 && v.z > 15)
-        {
-            v.z = 0;
-        }
-        gameObject.transform.rotation = Quaternion.Euler(v);
+//        Vector3 v = gameObject.transform.rotation.eulerAngles;
+//        if (v.x < 0) v.x += 360;
+//        if (v.z < 0) v.z += 360;
+//        if (v.x < 345 && v.x > 15)
+//        {
+//            v.x = 0;
+//        }
+//        if (v.z < 345 && v.z > 15)
+//        {
+//            v.z = 0;
+//        }
+//        gameObject.transform.rotation = Quaternion.Euler(v);
     }
 
     void OnDestroy()

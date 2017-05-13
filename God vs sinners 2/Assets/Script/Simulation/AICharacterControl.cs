@@ -12,7 +12,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 0.025;  // Newton
+    public double Ai = 1;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 4;
     public double minDistanceInteractionSqrt = 4*4;
@@ -227,7 +227,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai * Math.Exp((distancePed1Ped2));
+            double repulsiveFroce = Ai / distancePed1Ped2;
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
