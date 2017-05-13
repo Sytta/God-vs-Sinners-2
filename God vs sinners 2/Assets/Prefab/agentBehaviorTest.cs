@@ -4,28 +4,6 @@ using System;
 using UnityEngine;
 
 // TODO : CREATE A BOARD OBJECT FOR THE RANDOM GENERATION OF AGENTS
-public static class globalVariablesTemp
-{
-    public static float minBoardX = -2.0f;
-    public static float maxBoardX = 2.0f;
-
-    public static float minBoardY = -2.0f;
-    public static float maxBoardY = 2.0f;
-
-    private static System.Random rnd = new System.Random();
-
-    public static float genRandomFloat(float min, float max)
-    {
-        // Perform arithmetic in double type to avoid overflowing
-        double range = (double)max - (double)min;
-        double sample = rnd.NextDouble();
-        double scaled = (sample * range) + min;
-        float f = (float)scaled;
-
-        return f;
-    }
-}
-
 public class agentClassGlobal
 {
     public long agentID;
@@ -47,9 +25,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*15, globalVariablesTemp.maxBoardX * 15);
-        pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY * 15, globalVariablesTemp.maxBoardY * 15);
+        pos.x = 0.0f;
+        pos.y = 0.0f;
+        pos.z = 0.0f;
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -81,7 +59,7 @@ public class agentBehaviorTest : MonoBehaviour
     void Start()
     {
         selfSimObject = Factory.generate(self);
-        gameObject.transform.localPosition = self.pos;
+        self.pos = gameObject.transform.localPosition;
         self.dna = new DNA();
         self.morality = self.dna.getMorality();
     }
