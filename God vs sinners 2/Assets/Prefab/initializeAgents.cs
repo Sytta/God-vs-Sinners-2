@@ -19,5 +19,10 @@ public class initializeAgents : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         SimulationMap.Instance.Update(UnityEngine.Time.deltaTime);
-	}
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            SimulationMap.Instance.fleeFrom(new Vector3(0, 0, 0), 15);
+        }
+
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-
+using UnityEngine;
 /// <summary>
 /// Singleton simulation map for the whole simulation.
 /// </summary>
@@ -278,6 +278,19 @@ public class SimulationMap
     public void removeEndNode(QuadMap q)
     {
         endNodes.Remove(q);
+    }
+
+
+
+    public void fleeFrom(Vector3 source, double magnitudeRadius)
+    {
+        foreach(KeyValuePair<long,SimulationObject> entry in objects)
+        {
+            if(entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
+            {
+                ((AICharacterControl)entry.Value).fleeFrom(Utilities.convert(source), magnitudeRadius);
+            }
+        }
     }
 }
 
