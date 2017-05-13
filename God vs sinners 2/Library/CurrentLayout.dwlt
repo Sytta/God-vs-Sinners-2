@@ -40,10 +40,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
+    width: 1536
+    height: 731
+  m_MinSize: {x: 681, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
+=======
     width: 1680
     height: 917
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
+>>>>>>> 7ccc6efb9a3bf75169d2caac344ad67b17022c75
   vertical: 0
   controlID: 44
 --- !u!114 &3
@@ -62,11 +69,23 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1339
     y: 0
+<<<<<<< HEAD
     width: 341
+=======
+<<<<<<< HEAD
+    width: 311
+    height: 731
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 12}
+=======
+    width: 444
+>>>>>>> 3088c1a75d85aca7fb3b3f13f77d507d7f9aa7ce
     height: 917
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
+>>>>>>> 7ccc6efb9a3bf75169d2caac344ad67b17022c75
   m_Panes:
   - {fileID: 14}
   m_Selected: 0
@@ -250,11 +269,26 @@ MonoBehaviour:
     serializedVersion: 2
     x: 239
     y: 0
+<<<<<<< HEAD
     width: 1100
     height: 527
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
+=======
+<<<<<<< HEAD
+    width: 922
+    height: 442
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 17}
+=======
+    width: 912
+    height: 547
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> 3088c1a75d85aca7fb3b3f13f77d507d7f9aa7ce
   m_ActualView: {fileID: 16}
+>>>>>>> 7ccc6efb9a3bf75169d2caac344ad67b17022c75
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
@@ -678,7 +712,18 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 0
+    y: 534
+=======
     x: 8
+<<<<<<< HEAD
     y: 718
     width: 1366
     height: 308
+=======
+    y: 542
+>>>>>>> 7ccc6efb9a3bf75169d2caac344ad67b17022c75
+    width: 1223
+    height: 268
+>>>>>>> 3088c1a75d85aca7fb3b3f13f77d507d7f9aa7ce
