@@ -12,19 +12,24 @@ public class Touched : MonoBehaviour {
             Debug.LogError("Need to have VRTK_ControllerEvents component attached to the controller");
             return;
         }
-        GetComponent<VRTK_ControllerEvents>().TriggerPressed += new ControllerInteractionEventHandler(GodKill); ;
 
+        GetComponent<VRTK_ControllerEvents>().TriggerPressed += new ControllerInteractionEventHandler(GodKill);
         Debug.Log("I am alive !");
     }
 
     private void GodKill(object sender, VRTK.ControllerInteractionEventArgs e)
     {
-        Debug.Log("Kill me !");
-        GameObject.Destroy(this.gameObject);
+        GameObject inch = GetComponent<VRTK_InteractTouch>().GetTouchedObject();
+        if(inch != null)
+        { 
+            if (inch.tag == "inch")
+                GameObject.Destroy(inch.gameObject);
+        }
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update ()
+    {
+
+    }
 }
