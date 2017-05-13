@@ -76,18 +76,14 @@ public class agentBehaviorTest : MonoBehaviour
             output = hitInfoCurrent.point;
 
             if (Vector3.Distance(output, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
+        }
 
-        }
-        else if (Mathf.Abs(gameObject.transform.localPosition.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.localPosition.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
-        {
-            // Destroy(gameObject);
-        }
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, Math.Max(0.5f, gameObject.transform.localPosition.y), gameObject.transform.localPosition.z);
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
 
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
