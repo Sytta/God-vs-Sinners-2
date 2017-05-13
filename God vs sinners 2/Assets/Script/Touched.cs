@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
+
 public class Touched : MonoBehaviour {
     string controllerHand;
 	// Use this for initialization
