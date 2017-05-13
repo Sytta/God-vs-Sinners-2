@@ -16,15 +16,18 @@ public class inch : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+        Vector3 v = new Vector3(1, 0, 1);
         if (collision.gameObject.tag == "Table" || collision.gameObject.tag == "Untagged")
         {
             return;
         }
         Vector3 direction;
         direction = this.transform.position + collision.transform.position;
+        direction.y = 0;
+        direction = direction.normalized;
         ContactPoint contact = collision.contacts[0];
 
-        GetComponent<Rigidbody>().velocity = collision.relativeVelocity.magnitude * direction.normalized * 1.2f;
+        GetComponent<Rigidbody>().velocity = collision.relativeVelocity.magnitude  * direction * 2.0f;
 
     }
 }
