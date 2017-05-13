@@ -4,28 +4,6 @@ using System;
 using UnityEngine;
 
 // TODO : CREATE A BOARD OBJECT FOR THE RANDOM GENERATION OF AGENTS
-public static class globalVariablesTemp
-{
-    public static float minBoardX = -2.0f;
-    public static float maxBoardX = 2.0f;
-
-    public static float minBoardY = -2.0f;
-    public static float maxBoardY = 2.0f;
-
-    private static System.Random rnd = new System.Random();
-
-    public static float genRandomFloat(float min, float max)
-    {
-        // Perform arithmetic in double type to avoid overflowing
-        double range = (double)max - (double)min;
-        double sample = rnd.NextDouble();
-        double scaled = (sample * range) + min;
-        float f = (float)scaled;
-
-        return f;
-    }
-}
-
 public class agentClassGlobal
 {
     public long agentID;
@@ -47,9 +25,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*15, globalVariablesTemp.maxBoardX * 15);
-        pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY * 15, globalVariablesTemp.maxBoardY * 15);
+        pos.x = 0.0f;
+        pos.y = 0.0f;
+        pos.z = 0.0f;
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -81,7 +59,7 @@ public class agentBehaviorTest : MonoBehaviour
     void Start()
     {
         selfSimObject = Factory.generate(self);
-        gameObject.transform.localPosition = self.pos;
+        self.pos = gameObject.transform.localPosition;
         self.dna = new DNA();
         self.morality = self.dna.getMorality();
     }
@@ -89,27 +67,22 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 output = new Vector3(1000.0f, 1000.0f, 1000.0f);
+        Vector3 raycastOutput = new Vector3(1000.0f, 1000.0f, 1000.0f);
 
         RaycastHit hitInfoCurrent;
 
         if (Physics.Raycast(gameObject.transform.localPosition, new Vector3(self.velocity.x, 0.0f, self.velocity.z).normalized, out hitInfoCurrent, Mathf.Infinity))
         {
-            output = hitInfoCurrent.point;
+            raycastOutput = hitInfoCurrent.point;
 
-            if (Vector3.Distance(output, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
-
-        }
-        else if (Mathf.Abs(gameObject.transform.localPosition.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.localPosition.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
-        {
-            //Destroy(gameObject);
+            if (Vector3.Distance(raycastOutput, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
         }
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, Math.Max(0.5f, gameObject.transform.localPosition.y), gameObject.transform.localPosition.z);
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
 
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
@@ -120,8 +93,9 @@ public class agentBehaviorTest : MonoBehaviour
         Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
         Vector3G velocityVector3G = Utilities.convert(self.velocity);
+        Vector3G raycastHit3G = Utilities.convert(raycastOutput);
 
-        selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G);
+        selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G, raycastHit3G);
 
         self.velocity += Utilities.convert(selfSimObject.V)* UnityEngine.Time.deltaTime;
         if (float.IsNaN(self.velocity.x))
