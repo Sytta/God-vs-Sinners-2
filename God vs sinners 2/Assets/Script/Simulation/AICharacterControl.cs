@@ -21,13 +21,13 @@ public class AICharacterControl : SimulationObject
     public double k2 = 1; // to be estimated (kg/m.s) panic situation
     public double kwall = 2.4 * 10000;
     public double k2wall = 1;
-    public Vector3 F1;
+    public Vector3G F1;
     private bool destroy;
-    public Vector3 F2, F3;
+    public Vector3G F2, F3;
     public int nbObjects;
-    public Vector3 V;
-    public Vector3 foward;
-    public Vector3 speed;
+    public Vector3G V;
+    public Vector3G foward;
+    public Vector3G speed;
     public double distance = 1;
 
     public double defaultDist = 3;
@@ -44,14 +44,14 @@ public class AICharacterControl : SimulationObject
     /// <param name="foward"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public AICharacterControl(Vector3 position, Vector3 foward,int idS)
+    public AICharacterControl(Vector3G position, Vector3G foward,long idS)
     {
         this.position = position;
         this.foward = foward;
-        this.speed = new Vector3(0,0,0);
+        this.speed = new Vector3G(0,0,0);
 
-        F2 = new Vector3(0, 0, 0);
-        F3 = new Vector3(0, 0, 0);
+        F2 = new Vector3G(0, 0, 0);
+        F3 = new Vector3G(0, 0, 0);
 
         // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;
@@ -84,7 +84,7 @@ public class AICharacterControl : SimulationObject
     /// <param name="position"></param>
     /// <param name="foward"></param>
     /// <param name="speed"></param>
-    public void update(Vector3 position, Vector3 foward, Vector3 speed)
+    public void update(Vector3G position, Vector3G foward, Vector3G speed)
     {
         this.position = position;
         this.foward = foward;
@@ -101,14 +101,14 @@ public class AICharacterControl : SimulationObject
     {
 
             
-        Vector3 deltaVec = position-s.position;
+        Vector3G deltaVec = position-s.position;
         double distancePed1Ped2Sqrt = deltaVec.sqrMagnitude();
         if (this != s &&
             distancePed1Ped2Sqrt < minDistanceInteractionSqrt)
         {
             double distancePed1Ped2 = deltaVec.Magnitude();
             double repulsiveFroce = Ai * Math.Exp((distancePed1Ped2));
-            Vector3 n = deltaVec / distancePed1Ped2;
+            Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
             if(s.GetType() == this.GetType())
@@ -122,23 +122,23 @@ public class AICharacterControl : SimulationObject
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    private Vector3 avoid(AICharacterControl s)
+    private Vector3G avoid(AICharacterControl s)
     {
-        Vector3 deltaVec = position - s.position;
-        if (Vector3.Dot(deltaVec, foward) > 0)
+        Vector3G deltaVec = position - s.position;
+        if (Vector3G.Dot(deltaVec, foward) > 0)
         {
-            Vector3 deltaSpeed = s.speed - speed;
-            Vector3 projFowardSpeed = Vector3.Dot(foward, deltaSpeed) * foward;
-            if (Vector3.Dot(foward, projFowardSpeed) < 0)
+            Vector3G deltaSpeed = s.speed - speed;
+            Vector3G projFowardSpeed = Vector3G.Dot(foward, deltaSpeed) * foward;
+            if (Vector3G.Dot(foward, projFowardSpeed) < 0)
             {
-                Vector3 right = Vector3.Cross(foward, new Vector3(0, 1, 0)).Normalized();
-                Vector3 projFowardDist = Vector3.Dot(foward, deltaVec) * foward;
-                Vector3 projRightDist = Vector3.Dot(right, deltaVec) * right;
+                Vector3G right = Vector3G.Cross(foward, new Vector3G(0, 1, 0)).Normalized();
+                Vector3G projFowardDist = Vector3G.Dot(foward, deltaVec) * foward;
+                Vector3G projRightDist = Vector3G.Dot(right, deltaVec) * right;
                 if (projRightDist.Magnitude() < 1.0)
                     return right * (3.0f - projRightDist.Magnitude()) * projFowardSpeed.Magnitude() / projFowardDist.Magnitude();
             }
         }
-        return new Vector3(0, 0, 0);
+        return new Vector3G(0, 0, 0);
     }
 
 

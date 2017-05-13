@@ -18,7 +18,7 @@ public class QuadMap
     public QuadMap parent;
     public long id;
     public AdjacencyMap adjacencyMap;
-    public Vector3 A, B, C, D;
+    public Vector3G A, B, C, D;
     public bool locked = false;
     public bool DestroyChildFlag = false;
 
@@ -38,10 +38,10 @@ public class QuadMap
         yourObject.maxInteractionSize = maxInteractionSize;
         yourObject.id = IdGenerator.Instance.genID();
         yourObject.adjacencyMap = map;
-        yourObject.A = new Vector3(centerX - sizeX, 0, centerY - sizeY);
-        yourObject.B = new Vector3(centerX - sizeX, 0, centerY + sizeY);
-        yourObject.C = new Vector3(centerX + sizeX, 0, centerY + sizeY);
-        yourObject.D = new Vector3(centerX + sizeX, 0, centerY - sizeY);
+        yourObject.A = new Vector3G(centerX - sizeX, 0, centerY - sizeY);
+        yourObject.B = new Vector3G(centerX - sizeX, 0, centerY + sizeY);
+        yourObject.C = new Vector3G(centerX + sizeX, 0, centerY + sizeY);
+        yourObject.D = new Vector3G(centerX + sizeX, 0, centerY - sizeY);
 
         return yourObject;
     }

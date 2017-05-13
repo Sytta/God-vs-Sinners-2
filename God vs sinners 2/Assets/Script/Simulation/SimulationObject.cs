@@ -24,8 +24,8 @@ public abstract class SimulationObject
         debug = i;
     }        
 
-    protected int id=-1;
-    public Vector3 position;
+    protected long id=-1;
+    public Vector3G position;
 
     /// <summary>
     /// Initiation

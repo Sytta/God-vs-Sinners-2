@@ -1,21 +1,42 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 /// <summary>
 /// Utilities
 /// </summary>
 public static class Utilities
 {
-
-    static public bool polygonIntersect(List<Vector3> poly1, List<Vector3> poly2)
-    {//TODO IMPLEMENT
-
-        return false;
+    // <summary>
+    /// Convert a Genesis vector3 to a unity one
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector3 convert(Vector3G v)
+    {
+        return new Vector3((float)v.x, (float)v.y, (float)v.z);
     }
 
-    static public bool pointIntersect(Vector3 point, List<Vector3> poly2)
-    {//TODO IMPLEMENT
-        return false;
+
+    /// <summary>
+    /// Convert a Genesis vector2 to a unity vector3
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector3 convert(Vector2G v)
+    {
+        return new Vector3((float)v.x, (float)0.0, (float)v.y);
     }
+
+    /// <summary>
+    /// Convert a Unity vector2 to a geneis one
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector3G convert(Vector3 v)
+    {
+        return new Vector3G(v.x, v.y, v.z);
+    }
+
 
     /// <summary>
     /// CLAMP

@@ -2,7 +2,7 @@
 /// <summary>
 /// Genesis 3d vector
 /// </summary>
-public class Vector3
+public class Vector3G
 {
     public double x;
     public double y;
@@ -20,7 +20,7 @@ public class Vector3
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="z"></param>
-    public Vector3(double x, double y, double z)
+    public Vector3G(double x, double y, double z)
     {
         this.x = x;
         this.y = y;
@@ -30,7 +30,7 @@ public class Vector3
     /// <summary>
     /// Default constructor
     /// </summary>
-    public Vector3()
+    public Vector3G()
     {
         x = 0;
         y = 0;
@@ -57,7 +57,7 @@ public class Vector3
     /// Vector2.y->Vector3.z
     /// </summary>
     /// <param name="v2"></param>
-    public Vector3(Vector2 v2)
+    public Vector3G(Vector2G v2)
     {
         x = v2.x;
         y = 0;
@@ -68,37 +68,37 @@ public class Vector3
     {
     }
 
-    public static Vector3 operator +(Vector3 c1, Vector3 c2)
+    public static Vector3G operator +(Vector3G c1, Vector3G c2)
     {
-        return new Vector3(c1.x + c2.x, c1.y + c2.y, c1.z + c2.z);
+        return new Vector3G(c1.x + c2.x, c1.y + c2.y, c1.z + c2.z);
     }
 
-    public static Vector3 operator -(Vector3 c1, Vector3 c2)
+    public static Vector3G operator -(Vector3G c1, Vector3G c2)
     {
-        return new Vector3(c1.x - c2.x, c1.y - c2.y, c1.z - c2.z);
+        return new Vector3G(c1.x - c2.x, c1.y - c2.y, c1.z - c2.z);
     }
 
-    public static Vector3 operator *(Vector3 c1, double c2)
+    public static Vector3G operator *(Vector3G c1, double c2)
     {
-        return new Vector3(c1.x * c2, c1.y * c2, c1.z * c2);
+        return new Vector3G(c1.x * c2, c1.y * c2, c1.z * c2);
     }
 
-    public static Vector3 operator *(double c2, Vector3 c1)
+    public static Vector3G operator *(double c2, Vector3G c1)
     {
         return c1 * c2;
     }
 
-    public static Vector3 operator /(Vector3 c1, double c2)
+    public static Vector3G operator /(Vector3G c1, double c2)
     {
-        return new Vector3(c1.x / c2, c1.y / c2, c1.z / c2);
+        return new Vector3G(c1.x / c2, c1.y / c2, c1.z / c2);
     }
 
-    public static Vector3 operator /(double c2, Vector3 c1)
+    public static Vector3G operator /(double c2, Vector3G c1)
     {
         return c1 / c2;
     }
 
-    public static Vector3 operator -(Vector3 c1)
+    public static Vector3G operator -(Vector3G c1)
     {
         return c1 * -1;
     }
@@ -117,7 +117,7 @@ public class Vector3
     /// Get the magnitude
     /// </summary>
     /// <returns></returns>
-    public static double Magnitude(Vector3 v)
+    public static double Magnitude(Vector3G v)
     {
         return v.Magnitude();
     }
@@ -126,7 +126,7 @@ public class Vector3
     /// Get the second power of the magnitude
     /// </summary>
     /// <returns></returns>
-    public static double SqrtMagnitude(Vector3 v)
+    public static double SqrtMagnitude(Vector3G v)
     {
         return v.sqrMagnitude();
     }
@@ -174,9 +174,9 @@ public class Vector3
     /// <param name="position1"></param>
     /// <param name="position2"></param>
     /// <returns></returns>
-    internal static double Distance(Vector3 position1, Vector3 position2)
+    internal static double Distance(Vector3G position1, Vector3G position2)
     {
-        return Vector3.Magnitude(position1 - position2);
+        return Vector3G.Magnitude(position1 - position2);
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public class Vector3
     /// <param name="position1"></param>
     /// <param name="position2"></param>
     /// <returns></returns>
-    internal static double SqrtDistance(Vector3 position1, Vector3 position2)
+    internal static double SqrtDistance(Vector3G position1, Vector3G position2)
     {
         return (position1 - position2).sqrMagnitude();
     }
@@ -194,7 +194,7 @@ public class Vector3
     /// Normalize the vector
     /// </summary>
     /// <returns></returns>
-    public Vector3 Normalized()
+    public Vector3G Normalized()
     {
         if (sqrMagnitude() == 1)
             return this;
@@ -225,7 +225,7 @@ public class Vector3
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
-    public double distance(Vector3 v)
+    public double distance(Vector3G v)
     {
         return (v - this).Magnitude();
     }
@@ -235,7 +235,7 @@ public class Vector3
     /// </summary>
     /// <param name="temp"></param>
     /// <returns></returns>
-    internal static Vector3 Normalize(Vector3 temp)
+    internal static Vector3G Normalize(Vector3G temp)
     {
         return temp.Normalized();
     }
@@ -246,7 +246,7 @@ public class Vector3
     /// <param name="v1"></param>
     /// <param name="v2"></param>
     /// <returns></returns>
-    internal static double Dot(Vector3 v1, Vector3 v2)
+    internal static double Dot(Vector3G v1, Vector3G v2)
     {
         return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
     }
@@ -257,9 +257,9 @@ public class Vector3
     /// <param name="u"></param>
     /// <param name="v"></param>
     /// <returns></returns>
-    internal static Vector3 Cross(Vector3 u, Vector3 v)
+    internal static Vector3G Cross(Vector3G u, Vector3G v)
     {
-        return new Vector3(u.y * v.z - u.z * v.y, -(u.x * v.z - u.z * v.x), u.x * v.y - u.y * v.x);
+        return new Vector3G(u.y * v.z - u.z * v.y, -(u.x * v.z - u.z * v.x), u.x * v.y - u.y * v.x);
     }
 
     /// <summary>
@@ -270,7 +270,7 @@ public class Vector3
     /// <param name="C"></param>
     /// <param name="D"></param>
     /// <returns></returns>
-    internal static bool isIntersect(Vector3 A, Vector3 B, Vector3 C, Vector3 D)
+    internal static bool isIntersect(Vector3G A, Vector3G B, Vector3G C, Vector3G D)
     {
         return (ccw(A, C, D) != ccw(B, C, D)) && (ccw(A, B, C) != ccw(A, B, D));
     }
@@ -282,7 +282,7 @@ public class Vector3
     /// <param name="B"></param>
     /// <param name="C"></param>
     /// <returns></returns>
-    internal static bool ccw(Vector3 A, Vector3 B, Vector3 C)
+    internal static bool ccw(Vector3G A, Vector3G B, Vector3G C)
     {
         return (C.z - A.z) * (B.x - A.x) > (B.z - A.z) * (C.x - A.x);
     }

@@ -3,7 +3,7 @@
 /// <summary>
 /// A 2D Vector for implementation
 /// </summary>
-public class Vector2
+public class Vector2G
 {
     public double x = 0;
     public double y = 0;
@@ -18,7 +18,7 @@ public class Vector2
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    public Vector2(double x, double y)
+    public Vector2G(double x, double y)
     {
         this.x = x;
         this.y = y;
@@ -27,7 +27,7 @@ public class Vector2
     /// <summary>
     /// Default constructor
     /// </summary>
-    public Vector2()
+    public Vector2G()
     {
         x = 0;
         y = 0;
@@ -37,7 +37,7 @@ public class Vector2
     /// Copy constructor
     /// </summary>
     /// <param name="v"></param>
-    public Vector2(Vector2 v)
+    public Vector2G(Vector2G v)
     {
         x = v.x;
         y = v.y;
@@ -51,7 +51,7 @@ public class Vector2
     /// Simply discards the 3rd dimension
     /// </summary>
     /// <param name="v3"></param>
-    public Vector2(Vector3 v3)
+    public Vector2G(Vector3G v3)
     {
         x = v3.x;
         y = v3.z;
@@ -70,38 +70,38 @@ public class Vector2
     }
 
 
-    public static Vector2 operator +(Vector2 c1, Vector2 c2)
+    public static Vector2G operator +(Vector2G c1, Vector2G c2)
     {
-        return new Vector2(c1.x + c2.x, c1.y + c2.y);
+        return new Vector2G(c1.x + c2.x, c1.y + c2.y);
     }
 
-    public static Vector2 operator -(Vector2 c1, Vector2 c2)
+    public static Vector2G operator -(Vector2G c1, Vector2G c2)
     {
-        return new Vector2(c1.x - c2.x, c1.y - c2.y);
+        return new Vector2G(c1.x - c2.x, c1.y - c2.y);
     }
 
-    public static Vector2 operator *(Vector2 c1, double c2)
+    public static Vector2G operator *(Vector2G c1, double c2)
     {
-        return new Vector2(c1.x * c2, c1.y * c2);
+        return new Vector2G(c1.x * c2, c1.y * c2);
     }
 
-    public static Vector2 operator *(double c2, Vector2 c1)
+    public static Vector2G operator *(double c2, Vector2G c1)
     {
         return c1 * c2;
     }
 
-    public static Vector2 operator /(Vector2 c1, double c2)
+    public static Vector2G operator /(Vector2G c1, double c2)
     {
-        return new Vector2(c1.x / c2, c1.y / c2);
+        return new Vector2G(c1.x / c2, c1.y / c2);
     }
 
-    public static Vector2 operator /(double c2, Vector2 c1)
+    public static Vector2G operator /(double c2, Vector2G c1)
     {
         return c1 / c2;
     }
 
 
-    public static Vector2 operator -(Vector2 c1)
+    public static Vector2G operator -(Vector2G c1)
     {
         return c1 * -1;
     }
@@ -121,7 +121,7 @@ public class Vector2
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
-    public static double Magnitude(Vector2 v)
+    public static double Magnitude(Vector2G v)
     {
         return v.Magnitude();
     }
@@ -132,7 +132,7 @@ public class Vector2
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
-    public static double SqrtMagnitude(Vector2 v)
+    public static double SqrtMagnitude(Vector2G v)
     {
         return v.sqrMagnitude();
     }
@@ -184,9 +184,9 @@ public class Vector2
     /// <param name="position1"></param>
     /// <param name="position2"></param>
     /// <returns></returns>
-    internal static double Distance(Vector2 position1, Vector2 position2)
+    internal static double Distance(Vector2G position1, Vector2G position2)
     {
-        return Vector2.Magnitude(position1 - position2);
+        return Vector2G.Magnitude(position1 - position2);
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ public class Vector2
     /// <param name="position1"></param>
     /// <param name="position2"></param>
     /// <returns></returns>
-    internal static double SqrtDistance(Vector2 position1, Vector2 position2)
+    internal static double SqrtDistance(Vector2G position1, Vector2G position2)
     {
         return (position1 - position2).sqrMagnitude();
     }
@@ -204,7 +204,7 @@ public class Vector2
     /// Return the normalized vector
     /// </summary>
     /// <returns></returns>
-    public Vector2 Normalized()
+    public Vector2G Normalized()
     {
         if (sqrMagnitude() == 1)
             return this;
@@ -220,7 +220,7 @@ public class Vector2
     /// <param name="u"></param>
     /// <param name="v"></param>
     /// <returns></returns>
-    internal static double angle(Vector2 u, Vector2 v)
+    internal static double angle(Vector2G u, Vector2G v)
     {
         double dot = Dot(u, v);
         double mag = (u.Magnitude() * v.Magnitude());
@@ -236,9 +236,9 @@ public class Vector2
     internal double absAngle()
     {
         if (y > 0)
-            return angle(this, new Vector2(1, 0));
+            return angle(this, new Vector2G(1, 0));
         else if (y < 0)
-            return 2 * Math.PI - angle(this, new Vector2(1, 0));
+            return 2 * Math.PI - angle(this, new Vector2G(1, 0));
         else if (x < 0)
             return Math.PI;
         else
@@ -251,7 +251,7 @@ public class Vector2
     /// </summary>
     /// <param name="d"></param>
     /// <returns></returns>
-    internal Vector2 rotate(double d)
+    internal Vector2G rotate(double d)
     {
         double newX = x * Math.Cos(d) - y * Math.Sin(d);
         double newY = x * Math.Sin(d) + y * Math.Cos(d);
@@ -264,9 +264,9 @@ public class Vector2
     /// Generate a perpendicular vector to the current one when linked to the origin
     /// </summary>
     /// <returns></returns>
-    internal Vector2 genPerp()
+    internal Vector2G genPerp()
     {
-        return new Vector2(-y, x);
+        return new Vector2G(-y, x);
     }
 
     /// <summary>
@@ -289,7 +289,7 @@ public class Vector2
     /// </summary>
     /// <param name="temp"></param>
     /// <returns></returns>
-    internal static Vector2 Normalize(Vector2 temp)
+    internal static Vector2G Normalize(Vector2G temp)
     {
         return temp.Normalized();
     }
@@ -300,7 +300,7 @@ public class Vector2
     /// <param name="v1"></param>
     /// <param name="v2"></param>
     /// <returns></returns>
-    internal static double Dot(Vector2 v1, Vector2 v2)
+    internal static double Dot(Vector2G v1, Vector2G v2)
     {
         return v1.x * v2.x + v1.y * v2.y;
     }
@@ -310,7 +310,7 @@ public class Vector2
     /// </summary>
     /// <param name="Other"></param>
     /// <returns></returns>
-    internal bool isOnRight(Vector2 Other)
+    internal bool isOnRight(Vector2G Other)
     {
         double carRot = absAngle();
         double thisAngle = Other.absAngle();
@@ -336,7 +336,7 @@ public class Vector2
     /// </summary>
     /// <param name="Other"></param>
     /// <returns></returns>
-    internal double getRightAngle(Vector2 Other)
+    internal double getRightAngle(Vector2G Other)
     {
         double carRot = absAngle();
         double thisAngle = Other.absAngle();
@@ -354,7 +354,7 @@ public class Vector2
     /// </summary>
     /// <param name="Other"></param>
     /// <returns></returns>
-    internal double getLeftAngle(Vector2 Other)
+    internal double getLeftAngle(Vector2G Other)
     {
         double carRot = absAngle();
         double thisAngle = Other.absAngle();
@@ -371,7 +371,7 @@ public class Vector2
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
-    public bool isClockwise(Vector2 v){
+    public bool isClockwise(Vector2G v){
         if (y * v.x > x * v.y)
             return false;
         else
