@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class Factory
 {
 
-    public static AICharacterControl generate(agentClassGlobal agent)
+    public static AICharacterControl generate(agentClassGlobal agent,DNA dna)
     {
         AICharacterControl character =  new AICharacterControl(Utilities.convert(agent.pos),
                                         Utilities.convert(agent.bodyForVec),
-                                        agent.agentID);
+                                        agent.agentID,dna);
 
         SimulationMap.Instance.add(character);
 
