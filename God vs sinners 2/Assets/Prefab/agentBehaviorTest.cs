@@ -44,13 +44,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        //pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*25, globalVariablesTemp.maxBoardX * 25);
-        //pos.y = 0.51f;
-        //pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY* 25, globalVariablesTemp.maxBoardY * 25);
-
-        pos.x = 0.0f;
-        pos.y = 0.0f;
-        pos.z = 0.0f;
+        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*15, globalVariablesTemp.maxBoardX * 15);
+        pos.y = 0.5f;
+        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY * 15, globalVariablesTemp.maxBoardY * 15);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -72,7 +68,6 @@ public class agentBehaviorTest : MonoBehaviour
     public AICharacterControl selfSimObject;
 
     public Vector3 debug;
-
     public Vector3 debug2;
     public Vector3 debug3;
     public float debug4;
@@ -81,7 +76,7 @@ public class agentBehaviorTest : MonoBehaviour
     void Start()
     {
         selfSimObject = Factory.generate(self);
-        self.pos = gameObject.transform.localPosition;
+        gameObject.transform.localPosition = self.pos;
     }
 
     // Update is called once per frame
@@ -91,29 +86,31 @@ public class agentBehaviorTest : MonoBehaviour
 
         RaycastHit hitInfoCurrent;
 
-        if (Physics.Raycast(gameObject.transform.position, new Vector3(self.velocity.x, 0.0f, self.velocity.z).normalized, out hitInfoCurrent, Mathf.Infinity))
+        if (Physics.Raycast(gameObject.transform.localPosition, new Vector3(self.velocity.x, 0.0f, self.velocity.z).normalized, out hitInfoCurrent, Mathf.Infinity))
         {
             output = hitInfoCurrent.point;
 
-            if (Vector3.Distance(output, gameObject.transform.position) < 0.01f) Destroy(gameObject);
+            if (Vector3.Distance(output, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
+
         }
-
-
- 
+        else if (Mathf.Abs(gameObject.transform.localPosition.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.localPosition.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
+        {
+            //Destroy(gameObject);
+        }
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
-        self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
-        self.pos.y = 0.51f;
+        gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, Math.Max(0.5f, gameObject.transform.localPosition.y), gameObject.transform.localPosition.z);
+
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
         debug3 = Utilities.convert(selfSimObject.V);
         debug4 = (float)selfSimObject.panic;
+        gameObject.transform.localPosition = gameObject.transform.localPosition;
 
-        gameObject.transform.localPosition = self.pos;
-
-        Vector3G posVector3G = Utilities.convert(self.pos);
+        Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
         Vector3G velocityVector3G = Utilities.convert(self.velocity);
 
@@ -124,13 +121,15 @@ public class agentBehaviorTest : MonoBehaviour
         {
             self.velocity = new Vector3(0, 0, 0);
         }
-
-
-
     }
 
     void OnDestroy()
     {
         SimulationMap.Instance.remove(self.agentID);
+    }
+
+    void forceUpdate(Vector3 newPos)
+    {
+        gameObject.transform.localPosition = newPos;
     }
 }
