@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "God vs sinners 2", "God vs sinners 2.csproj", "{F4BA8EE9-9FD7-A6C2-E2CD-344578C444D3}"
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "God vs sinners 2.CSharp", "God vs sinners 2.CSharp.csproj", "{A1566FC7-5C21-EEAD-839B-489149FD4EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "God vs sinners 2.Editor", "God vs sinners 2.Editor.csproj", "{92F6D150-0C04-5F0A-CCF9-BA914C41E337}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "God vs sinners 2.CSharp.Editor", "God vs sinners 2.CSharp.Editor.csproj", "{610121C9-AE03-8943-F216-416A7EB99D08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F4BA8EE9-9FD7-A6C2-E2CD-344578C444D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4BA8EE9-9FD7-A6C2-E2CD-344578C444D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4BA8EE9-9FD7-A6C2-E2CD-344578C444D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4BA8EE9-9FD7-A6C2-E2CD-344578C444D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92F6D150-0C04-5F0A-CCF9-BA914C41E337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92F6D150-0C04-5F0A-CCF9-BA914C41E337}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92F6D150-0C04-5F0A-CCF9-BA914C41E337}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92F6D150-0C04-5F0A-CCF9-BA914C41E337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1566FC7-5C21-EEAD-839B-489149FD4EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1566FC7-5C21-EEAD-839B-489149FD4EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1566FC7-5C21-EEAD-839B-489149FD4EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1566FC7-5C21-EEAD-839B-489149FD4EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{610121C9-AE03-8943-F216-416A7EB99D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{610121C9-AE03-8943-F216-416A7EB99D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{610121C9-AE03-8943-F216-416A7EB99D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{610121C9-AE03-8943-F216-416A7EB99D08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

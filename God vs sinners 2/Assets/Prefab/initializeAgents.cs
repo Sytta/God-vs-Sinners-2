@@ -16,7 +16,7 @@ public class initializeAgents : MonoBehaviour {
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
             a.localScale = new Vector3(1f, 1f, 1f);
 
-            a.localPosition = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
+            a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
 
             // CHECK IF SPAWN INSIDE COLLIDER
             // Collider[] collidersList = FindObjectsOfType(typeof(Collider)) as Collider[];

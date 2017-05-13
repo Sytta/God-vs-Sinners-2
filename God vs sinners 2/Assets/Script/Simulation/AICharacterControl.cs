@@ -12,7 +12,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 0.05;  // Newton
+    public double Ai = 0.025;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 4;
     public double minDistanceInteractionSqrt = 4*4;
@@ -27,7 +27,7 @@ public class AICharacterControl : SimulationObject
     public double k2wall = 1;
     public Vector3G F1;
     private bool destroy;
-    public Vector3G F2, F3;
+    public Vector3G F2, F3,F4;
     public int nbObjects;
     public Vector3G V;
     public Vector3G foward;
@@ -36,6 +36,7 @@ public class AICharacterControl : SimulationObject
 
     public Vector3G raycastHit;
 
+    public double avoidWall = 1;
 
     public double panic = 0.1;
     public double minPanic = 0.1, maxPanic = 10;
@@ -84,7 +85,7 @@ public class AICharacterControl : SimulationObject
         F1 = new Vector3G(0, 0, 0);
         F2 = new Vector3G(0, 0, 0);
         F3 = new Vector3G(0, 0, 0);
-
+        F4 = new Vector3G(0, 0, 0);
         V = new Vector3G(0, 0, 0);
         raycastHit  = new Vector3G(1000, 1000, 1000);
 
@@ -93,7 +94,7 @@ public class AICharacterControl : SimulationObject
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
 
-        destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
+        destination = new Vector3G(genRandomFloat(-35, 35), 0, genRandomFloat(-35, 35));
     }
 
 
@@ -134,6 +135,13 @@ public class AICharacterControl : SimulationObject
     public override bool genesisUpdate(double deltaT)
     {
 
+        Vector3G deltaVec = position - raycastHit;
+        double toWall = deltaVec.Magnitude();
+        if (toWall < 2)
+        {
+            F2 = deltaVec.Normalized() / toWall* avoidWall;
+        }
+
         if (destination != null)
         {
             if ((destination - position).Magnitude() < 2)
@@ -152,7 +160,7 @@ public class AICharacterControl : SimulationObject
         panic = Utilities.Clamp<double>(panic, minPanic, maxPanic);
 
         
-        V = (F1 + F2 + F3);
+        V = (F1 + F2 + F3 + F4);
         foreach (KeyValuePair<string, Vector3G> entry in forces)
         {
             if (entry.Key.Equals("flee"))
@@ -166,11 +174,12 @@ public class AICharacterControl : SimulationObject
         }
         if(panic < 0.5 && forces.ContainsKey("flee"))
             forces.Remove("flee");
-        
+
+        V.y = 0;
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
-
+        F4.Set(0, 0, 0);
         return true;
 
     }
