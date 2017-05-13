@@ -57,17 +57,25 @@ public class DNA {
         dnaCharacteristics.Add(dnaTypes[++dnaIndex], Random.Range(MIN_DYING_AGE, MAX_DYING_AGE));
     }
 
-    // Merge to generate a new DNA
-    public DNA(DNA dna1, DNA dna2)
+    public static DNA Reproduce(DNA dna1, DNA dna2)
     {
-        DNA mom, dad;
-
         // Both are the same sex
         if (dna1.isMale() == dna2.isMale())
         {
-            mom = dna1;
-            dad = dna2;
-        } else if (dna1.isMale())
+            return null;
+        }
+        else
+        {
+            return new DNA(dna1, dna2);
+        }
+    }
+
+    // Merge to generate a new DNA
+    private DNA(DNA dna1, DNA dna2)
+    {
+        DNA mom, dad;
+
+         if (dna1.isMale())
         {
             mom = dna2;
             dad = dna1;
