@@ -81,10 +81,6 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-        {
-            selfSimObject.fleeFrom(new Vector3G(0, 0, 0), 15);
-        }
         Vector3 output = new Vector3(1000.0f, 1000.0f, 1000.0f);
 
         RaycastHit hitInfoCurrent;
