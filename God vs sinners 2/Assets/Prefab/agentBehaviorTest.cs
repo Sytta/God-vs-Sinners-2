@@ -70,7 +70,7 @@ public class agentBehaviorTest : MonoBehaviour
     public Vector3 debug;
     public Vector3 debug2;
     public Vector3 debug3;
-
+    public float debug4;
 
     // Use this for initialization
     void Start()
@@ -81,6 +81,10 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            selfSimObject.fleeFrom(new Vector3G(0, 0, 0), 15);
+        }
         Vector3 output = new Vector3(1000.0f, 1000.0f, 1000.0f);
 
         RaycastHit hitInfoCurrent;
@@ -90,7 +94,6 @@ public class agentBehaviorTest : MonoBehaviour
             output = hitInfoCurrent.point;
 
             if (Vector3.Distance(output, gameObject.transform.position) < 0.01f) Destroy(gameObject);
-            Debug.Log(output.ToString("F4"));
 
         }
         else if (Mathf.Abs(gameObject.transform.position.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.position.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
@@ -107,6 +110,7 @@ public class agentBehaviorTest : MonoBehaviour
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
         debug3 = Utilities.convert(selfSimObject.V);
+        debug4 = (float)selfSimObject.panic;
         gameObject.transform.localPosition = self.pos;
 
         Vector3G posVector3G = Utilities.convert(self.pos);
