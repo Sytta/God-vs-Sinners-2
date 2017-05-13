@@ -44,9 +44,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*15, globalVariablesTemp.maxBoardX * 15);
+        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*25, globalVariablesTemp.maxBoardX * 25);
         pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY * 15, globalVariablesTemp.maxBoardY * 15);
+        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY* 25, globalVariablesTemp.maxBoardY * 25);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -86,19 +86,15 @@ public class agentBehaviorTest : MonoBehaviour
             output = hitInfoCurrent.point;
 
             if (Vector3.Distance(output, gameObject.transform.position) < 0.01f) Destroy(gameObject);
-            Debug.Log(output.ToString("F4"));
+            //Debug.Log(output.ToString("F4"));
+        }
 
-        }
-        else if (Mathf.Abs(gameObject.transform.position.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.position.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
-        {
-            Destroy(gameObject);
-        }
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
-
+        self.pos.y = 0.5f;
 
         debug = self.velocity;
         gameObject.transform.localPosition = self.pos;

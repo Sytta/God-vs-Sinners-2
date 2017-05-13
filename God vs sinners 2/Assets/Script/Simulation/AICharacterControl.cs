@@ -10,7 +10,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 0.0025;  // Newton
+    public double Ai = 0.05;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 3;
     public double minDistanceInteractionSqrt = 9;
@@ -33,9 +33,9 @@ public class AICharacterControl : SimulationObject
     public double panic = 0;
     public double minPanic = 0, maxPanic = 10;
 
-    public double minSpeed = 3, maxSpeed = 6;
+    public double minSpeed = 1.5, maxSpeed = 6;
 
-    public double accelToCenter = 1;
+    public double accelToCenter = 0.5;
 
 
     public double defaultDist = 3;
@@ -46,6 +46,19 @@ public class AICharacterControl : SimulationObject
 
     public double accelMax = 2;
 
+    private static System.Random rnd = new System.Random();
+    public static float genRandomFloat(float min, float max)
+    {
+        // Perform arithmetic in double type to avoid overflowing
+        double range = (double)max - (double)min;
+        double sample = rnd.NextDouble();
+        double scaled = (sample * range) + min;
+        float f = (float)scaled;
+
+        return f;
+    }
+
+
     /// <summary>
     /// Basic Constructor 
     /// </summary>
@@ -53,11 +66,11 @@ public class AICharacterControl : SimulationObject
     /// <param name="foward"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public AICharacterControl(Vector3G position, Vector3G foward,long idS)
+    public AICharacterControl(Vector3G position, Vector3G foward, long idS)
     {
         this.position = position;
         this.foward = foward;
-        this.speed = new Vector3G(0,0,0);
+        this.speed = new Vector3G(0, 0, 0);
 
         F1 = new Vector3G(0, 0, 0);
         F2 = new Vector3G(0, 0, 0);
@@ -70,6 +83,7 @@ public class AICharacterControl : SimulationObject
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
 
+        destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
     }
 
 
@@ -92,7 +106,12 @@ public class AICharacterControl : SimulationObject
     public override bool genesisUpdate(double deltaT)
     {
 
-        if (destination != null) {
+        if (destination != null)
+        {
+            if ((destination - position).Magnitude() < 2)
+            {
+                destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
+            }
             F1 = destination - position;
             F1.Normalize();
             F1 *= accelToCenter;
@@ -101,18 +120,6 @@ public class AICharacterControl : SimulationObject
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
-
-        double desiredSpeed = ((panic - minPanic) / (maxPanic - minPanic)) * (maxSpeed - minSpeed) + minSpeed;//Speed determined by size. 
-        double accel = Utilities.Clamp<double>((desiredSpeed - speed.Magnitude()), -accelMax, accelMax);
-        double currentAccel = V.Magnitude();
-        if(currentAccel > accel )
-        {
-            V = V.Normalized() * accel;
-        }
-        else if (currentAccel< -accel)
-        {
-            V = V.Normalized() * -accel;    
-        }
 
         return true;
 
@@ -140,8 +147,8 @@ public class AICharacterControl : SimulationObject
     public override void interactPedestrian(SimulationObject s, double deltaT)
     {
 
-            
-        Vector3G deltaVec = position-s.position;
+
+        Vector3G deltaVec = position - s.position;
         double distancePed1Ped2Sqrt = deltaVec.sqrMagnitude();
         if (this != s &&
             distancePed1Ped2Sqrt < minDistanceInteractionSqrt)
@@ -151,8 +158,8 @@ public class AICharacterControl : SimulationObject
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
-//            if(s.GetType() == this.GetType())
-//                F3 += avoid((AICharacterControl)s);
+            //            if(s.GetType() == this.GetType())
+            //                F3 += avoid((AICharacterControl)s);
 
         }
     }
@@ -190,8 +197,6 @@ public class AICharacterControl : SimulationObject
     {
         return OBJECTTYPE.PED;
     }
-
-
 
 
 }
