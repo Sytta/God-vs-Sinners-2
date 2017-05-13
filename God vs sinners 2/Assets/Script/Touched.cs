@@ -33,32 +33,17 @@ public class Touched : MonoBehaviour {
     }
     private void PickUp(object sender, VRTK.ControllerInteractionEventArgs e)
     {
-        GameObject inch = GetComponent<VRTK_InteractTouch>().GetTouchedObject();
+        GetComponent<VRTK_InteractGrab>().AttemptGrab();
+        GameObject inch = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
         if (inch != null)
-        {
-            if (inch.tag == "inch")
-            {
-                inch.GetComponent<agentBehaviorTest>().enabled = false;
-                inch.gameObject.transform.parent = this.transform;
-            }
-        }
+            inch.gameObject.GetComponent<agentBehaviorTest>().enabled = false;
     }
     private void Release(object sender, VRTK.ControllerInteractionEventArgs e)
     {
-        for (int i = 0; i < this.transform.childCount; i++)
-        {
-            Transform inch = this.transform.GetChild(i);
-            if (inch != null)
-            {
-                if (inch.gameObject.tag == "inch")
-                {
-                    float y = inch.position.y;
-                    inch.parent = GameObject.FindGameObjectWithTag("Table").transform;
-                    inch.gameObject.GetComponent<agentBehaviorTest>().enabled = true;
-                    inch.position = new Vector3(inch.position.x, y, inch.position.z);
-                }
-            }
-        }
+        GameObject inch = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
+        if (inch != null)
+            inch.gameObject.GetComponent<agentBehaviorTest>().enabled = true;
+        GetComponent<VRTK_InteractGrab>().ForceRelease();
     }
     // Update is called once per frame
     void Update ()
