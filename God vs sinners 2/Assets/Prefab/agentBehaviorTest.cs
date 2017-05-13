@@ -67,17 +67,16 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 output = new Vector3(1000.0f, 1000.0f, 1000.0f);
+        Vector3 raycastOutput = new Vector3(1000.0f, 1000.0f, 1000.0f);
 
         RaycastHit hitInfoCurrent;
 
         if (Physics.Raycast(gameObject.transform.localPosition, new Vector3(self.velocity.x, 0.0f, self.velocity.z).normalized, out hitInfoCurrent, Mathf.Infinity))
         {
-            output = hitInfoCurrent.point;
+            raycastOutput = hitInfoCurrent.point;
 
-            if (Vector3.Distance(output, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
+            if (Vector3.Distance(raycastOutput, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
         }
-
 
         // calcutate new position
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
@@ -94,8 +93,9 @@ public class agentBehaviorTest : MonoBehaviour
         Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
         Vector3G velocityVector3G = Utilities.convert(self.velocity);
+        Vector3G raycastHit3G = Utilities.convert(raycastOutput);
 
-        selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G);
+        selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G, raycastHit3G);
 
         self.velocity += Utilities.convert(selfSimObject.V)* UnityEngine.Time.deltaTime;
         if (float.IsNaN(self.velocity.x))

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class AICharacterControl : SimulationObject
 {
+
     public double dt = 0.05;
     public double timeElapsed = 0;
     //double dt=0.03; // second
@@ -32,6 +33,9 @@ public class AICharacterControl : SimulationObject
     public Vector3G foward;
     public Vector3G speed;
     public double distance = 1;
+
+    public Vector3G raycastHit;
+
 
     public double panic = 0.1;
     public double minPanic = 0.1, maxPanic = 10;
@@ -82,9 +86,10 @@ public class AICharacterControl : SimulationObject
         F3 = new Vector3G(0, 0, 0);
 
         V = new Vector3G(0, 0, 0);
+        raycastHit  = new Vector3G(1000, 1000, 1000);
 
-        // get the components on the object we need ( should not be null due to require component so no need to check )
-        id = idS;
+    // get the components on the object we need ( should not be null due to require component so no need to check )
+    id = idS;
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
 
@@ -176,11 +181,12 @@ public class AICharacterControl : SimulationObject
     /// <param name="position"></param>
     /// <param name="foward"></param>
     /// <param name="speed"></param>
-    public void update(Vector3G position, Vector3G foward, Vector3G speed)
+    public void update(Vector3G position, Vector3G foward, Vector3G speed, Vector3G raycastHit)
     {
         this.position = position;
         this.foward = foward;
         this.speed = speed;
+        this.raycastHit = raycastHit;
     }
 
 
