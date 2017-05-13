@@ -55,6 +55,9 @@ public class AICharacterControl : SimulationObject
     public double panicDecay = 0.7;
 
     private static System.Random rnd = new System.Random();
+
+    public DNA dna;
+
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -74,7 +77,7 @@ public class AICharacterControl : SimulationObject
     /// <param name="foward"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public AICharacterControl(Vector3G position, Vector3G foward, long idS)
+    public AICharacterControl(Vector3G position, Vector3G foward, long idS, DNA dna)
     {
         this.forces = new Dictionary<string, Vector3G>();
 
@@ -89,8 +92,9 @@ public class AICharacterControl : SimulationObject
         V = new Vector3G(0, 0, 0);
         raycastHit  = new Vector3G(1000, 1000, 1000);
 
+        this.dna = dna;
     // get the components on the object we need ( should not be null due to require component so no need to check )
-    id = idS;
+        id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
 
