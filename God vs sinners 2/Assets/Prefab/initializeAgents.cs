@@ -14,9 +14,9 @@ public class initializeAgents : MonoBehaviour {
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
-            a.localScale = new Vector3(0.5f, 1.7f, 0.5f);
+            a.localScale = new Vector3(1f, 1f, 1f);
 
-            a.localPosition = new Vector3(Random.Range(-50.0f, 50.0f), 0, Random.Range(-50.0f, 50.0f));
+            a.localPosition = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
 
             // CHECK IF SPAWN INSIDE COLLIDER
             // Collider[] collidersList = FindObjectsOfType(typeof(Collider)) as Collider[];
@@ -42,6 +42,9 @@ public class initializeAgents : MonoBehaviour {
         {
             SimulationMap.Instance.fleeFrom(new Vector3(0, 0, 0), 15);
         }
+
+        if (this.gameObject.transform.position.y < 0)
+            Destroy(this.gameObject);
 
     }
 }
