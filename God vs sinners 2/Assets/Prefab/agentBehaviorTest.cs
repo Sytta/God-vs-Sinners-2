@@ -44,9 +44,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX, globalVariablesTemp.maxBoardX);
+        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*5, globalVariablesTemp.maxBoardX*5);
         pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY, globalVariablesTemp.maxBoardY);
+        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY*5, globalVariablesTemp.maxBoardY*5);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -66,6 +66,8 @@ public class agentBehaviorTest : MonoBehaviour
 
     public AICharacterControl selfSimObject;
 
+
+    public Vector3 debug;
     // Use this for initialization
     void Start()
     {
@@ -76,8 +78,12 @@ public class agentBehaviorTest : MonoBehaviour
     void Update()
     {
         // calcutate new position
+        if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
+            self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
 
+
+        debug = self.velocity;
         gameObject.transform.localPosition = self.pos;
 
         Vector3G posVector3G = Utilities.convert(self.pos);
@@ -87,5 +93,9 @@ public class agentBehaviorTest : MonoBehaviour
         selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G);
 
         self.velocity += Utilities.convert(selfSimObject.V)* UnityEngine.Time.deltaTime;
+        if (float.IsNaN(self.velocity.x))
+        {
+            self.velocity = new Vector3(0, 0, 0);
+        }
     }
 }

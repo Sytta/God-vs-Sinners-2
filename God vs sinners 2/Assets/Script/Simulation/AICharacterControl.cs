@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 /// <summary>
 /// Genesis controller a pedestrian
 /// TODO Convert with pathdfinder.directionPed and maneuvers
@@ -31,6 +30,11 @@ public class AICharacterControl : SimulationObject
     public Vector3G speed;
     public double distance = 1;
 
+    public double panic = 0;
+    public double minPanic = 0, maxPanic = 10;
+
+    public double minSpeed = 3, maxSpeed = 6;
+
     public double accelToCenter = 1;
 
 
@@ -40,6 +44,7 @@ public class AICharacterControl : SimulationObject
     public enum State { WAITINGONNODE, ONLINK };
     public State state;
 
+    public double accelMax = 2;
 
     /// <summary>
     /// Basic Constructor 
@@ -68,10 +73,15 @@ public class AICharacterControl : SimulationObject
     }
 
 
-    public void goTo(Vector3 dest, double accelSpeed)
+    public void goTo(Vector3G dest, double accelSpeed)
     {
-        position = Utilities.convert(dest);
+        position = dest;
         accelToCenter = accelSpeed;
+    }
+
+    public double getMaxSpeed()
+    {
+        return ((panic - minPanic) / (maxPanic - minPanic)) * (maxSpeed - minSpeed) + minSpeed;
     }
 
     /// <summary>
@@ -91,6 +101,18 @@ public class AICharacterControl : SimulationObject
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
+
+        double desiredSpeed = ((panic - minPanic) / (maxPanic - minPanic)) * (maxSpeed - minSpeed) + minSpeed;//Speed determined by size. 
+        double accel = Utilities.Clamp<double>((desiredSpeed - speed.Magnitude()), -accelMax, accelMax);
+        double currentAccel = V.Magnitude();
+        if(currentAccel > accel )
+        {
+            V = V.Normalized() * accel;
+        }
+        else if (currentAccel< -accel)
+        {
+            V = V.Normalized() * -accel;    
+        }
 
         return true;
 
@@ -129,8 +151,8 @@ public class AICharacterControl : SimulationObject
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
-            if(s.GetType() == this.GetType())
-                F3 += avoid((AICharacterControl)s);
+//            if(s.GetType() == this.GetType())
+//                F3 += avoid((AICharacterControl)s);
 
         }
     }
