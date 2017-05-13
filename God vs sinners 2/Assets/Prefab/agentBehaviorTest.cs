@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 // TODO : CREATE A BOARD OBJECT FOR THE RANDOM GENERATION OF AGENTS
-public static class GlobalVariablesTemp
+public static class globalVariablesTemp
 {
-    public static float mineBoardX = 0;
-    public static float maxBoardX = 1;
+    public static float minBoardX = -5.0f;
+    public static float maxBoardX = 5.0f;
 
-    public static float minBoardY = 0;
-    public static float maxBoardY = 1;
+    public static float minBoardY = -5.0f;
+    public static float maxBoardY = 5.0f;
 
+    private static System.Random rnd = new System.Random();
 
+    public static float genRandomFloat(float min, float max)
+    {
+        // Perform arithmetic in double type to avoid overflowing
+        double range = (double)max - (double)min;
+        double sample = rnd.NextDouble();
+        double scaled = (sample * range) + min;
+        float f = (float)scaled;
+
+        return f;
+    }
 }
+
+
+
 
 public class agentClassGlobal
 {
@@ -31,17 +46,18 @@ public class agentClassGlobal
     public agentClassGlobal()
     {
         agentID = IdGenerator.Instance.genID();
-        pos.x = (float)agentID;
-        pos.y = (float)agentID;
-        pos.z = 0.0f;
+
+        pos.x = globalVariablesTemp.genRandomFloat(-5.0f, 5.0f);
+        pos.y = 0.5f;
+        pos.z = globalVariablesTemp.genRandomFloat(-5.0f, 5.0f);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
         bodyForVec.z = 0.0f;
 
-        velocity.x = 1.0f;
-        velocity.y = 1.0f;
-        velocity.z = 1.0f;
+        velocity.x = 0.0f;
+        velocity.y = 0.0f;
+        velocity.z = 0.0f;
 
         morality = 0.0f;
     }

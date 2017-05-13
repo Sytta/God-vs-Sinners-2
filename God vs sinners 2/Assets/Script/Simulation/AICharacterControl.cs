@@ -50,8 +50,11 @@ public class AICharacterControl : SimulationObject
         this.foward = foward;
         this.speed = new Vector3G(0,0,0);
 
+        F1 = new Vector3G(0, 0, 0);
         F2 = new Vector3G(0, 0, 0);
         F3 = new Vector3G(0, 0, 0);
+
+        V = new Vector3G(0, 0, 0);
 
         // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;

@@ -7,7 +7,11 @@ public class initializeAgents : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Instantiate(Agent1, transform.position, transform.rotation);
+
+        for (int i = 0; i<5; i++)
+        {
+            Instantiate(Agent1, transform.position, transform.rotation);
+        }
     }
 
     // Update is called once per frame
