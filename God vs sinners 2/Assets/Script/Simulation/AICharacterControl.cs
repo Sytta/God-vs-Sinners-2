@@ -10,7 +10,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 0.0025;  // Newton
+    public double Ai = 0.05;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 3;
     public double minDistanceInteractionSqrt = 9;
@@ -33,9 +33,9 @@ public class AICharacterControl : SimulationObject
     public double panic = 0;
     public double minPanic = 0, maxPanic = 10;
 
-    public double minSpeed = 3, maxSpeed = 6;
+    public double minSpeed = 1.5, maxSpeed = 6;
 
-    public double accelToCenter = 1;
+    public double accelToCenter = 0.5;
 
 
     public double defaultDist = 3;
@@ -45,6 +45,19 @@ public class AICharacterControl : SimulationObject
     public State state;
 
     public double accelMax = 2;
+
+    private static System.Random rnd = new System.Random();
+    public static float genRandomFloat(float min, float max)
+    {
+        // Perform arithmetic in double type to avoid overflowing
+        double range = (double)max - (double)min;
+        double sample = rnd.NextDouble();
+        double scaled = (sample * range) + min;
+        float f = (float)scaled;
+
+        return f;
+    }
+
 
     /// <summary>
     /// Basic Constructor 
@@ -70,6 +83,7 @@ public class AICharacterControl : SimulationObject
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
 
+        destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
     }
 
 
@@ -93,6 +107,10 @@ public class AICharacterControl : SimulationObject
     {
 
         if (destination != null) {
+            if ((destination - position).Magnitude() < 2)
+            {
+                destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
+            }
             F1 = destination - position;
             F1.Normalize();
             F1 *= accelToCenter;
@@ -101,18 +119,6 @@ public class AICharacterControl : SimulationObject
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
-
-        double desiredSpeed = ((panic - minPanic) / (maxPanic - minPanic)) * (maxSpeed - minSpeed) + minSpeed;//Speed determined by size. 
-        double accel = Utilities.Clamp<double>((desiredSpeed - speed.Magnitude()), -accelMax, accelMax);
-        double currentAccel = V.Magnitude();
-        if(currentAccel > accel )
-        {
-            V = V.Normalized() * accel;
-        }
-        else if (currentAccel< -accel)
-        {
-            V = V.Normalized() * -accel;    
-        }
 
         return true;
 

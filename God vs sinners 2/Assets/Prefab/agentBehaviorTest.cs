@@ -68,6 +68,10 @@ public class agentBehaviorTest : MonoBehaviour
     public AICharacterControl selfSimObject;
 
     public Vector3 debug;
+    public Vector3 debug2;
+    public Vector3 debug3;
+
+
     // Use this for initialization
     void Start()
     {
@@ -98,9 +102,11 @@ public class agentBehaviorTest : MonoBehaviour
         if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
             self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
         self.pos = self.pos + self.velocity * UnityEngine.Time.deltaTime;
+        self.pos.y = 0.5f;
 
-
-        debug = self.velocity;
+        debug = Utilities.convert(selfSimObject.destination);
+        debug2 = self.velocity;
+        debug3 = Utilities.convert(selfSimObject.V);
         gameObject.transform.localPosition = self.pos;
 
         Vector3G posVector3G = Utilities.convert(self.pos);
