@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// Genesis controller a pedestrian
 /// TODO Convert with pathdfinder.directionPed and maneuvers
@@ -30,9 +31,12 @@ public class AICharacterControl : SimulationObject
     public Vector3G speed;
     public double distance = 1;
 
+    public double accelToCenter = 1;
+
+
     public double defaultDist = 3;
 
-
+    public Vector3G destination = null;
     public enum State { WAITINGONNODE, ONLINK };
     public State state;
 
@@ -64,6 +68,12 @@ public class AICharacterControl : SimulationObject
     }
 
 
+    public void goTo(Vector3 dest, double accelSpeed)
+    {
+        position = Utilities.convert(dest);
+        accelToCenter = accelSpeed;
+    }
+
     /// <summary>
     /// Main update function called by genesis
     /// </summary>
@@ -72,6 +82,11 @@ public class AICharacterControl : SimulationObject
     public override bool genesisUpdate(double deltaT)
     {
 
+        if (destination != null) {
+            F1 = destination - position;
+            F1.Normalize();
+            F1 *= accelToCenter;
+        }
         V = (F1 + F2 + F3);
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
