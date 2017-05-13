@@ -6,11 +6,11 @@ using UnityEngine;
 // TODO : CREATE A BOARD OBJECT FOR THE RANDOM GENERATION OF AGENTS
 public static class globalVariablesTemp
 {
-    public static float minBoardX = -5.0f;
-    public static float maxBoardX = 5.0f;
+    public static float minBoardX = -2.0f;
+    public static float maxBoardX = 2.0f;
 
-    public static float minBoardY = -5.0f;
-    public static float maxBoardY = 5.0f;
+    public static float minBoardY = -2.0f;
+    public static float maxBoardY = 2.0f;
 
     private static System.Random rnd = new System.Random();
 
@@ -44,9 +44,9 @@ public class agentClassGlobal
     {
         agentID = IdGenerator.Instance.genID();
 
-        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*5, globalVariablesTemp.maxBoardX*5);
+        pos.x = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardX*15, globalVariablesTemp.maxBoardX * 15);
         pos.y = 0.5f;
-        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY*5, globalVariablesTemp.maxBoardY*5);
+        pos.z = globalVariablesTemp.genRandomFloat(globalVariablesTemp.minBoardY * 15, globalVariablesTemp.maxBoardY * 15);
 
         bodyForVec.x = 1.0f;
         bodyForVec.y = 0.0f;
@@ -67,7 +67,6 @@ public class agentBehaviorTest : MonoBehaviour
 
     public AICharacterControl selfSimObject;
 
-
     public Vector3 debug;
     // Use this for initialization
     void Start()
@@ -82,12 +81,15 @@ public class agentBehaviorTest : MonoBehaviour
 
         RaycastHit hitInfoCurrent;
 
-        if (Physics.Raycast(self.pos, self.velocity.normalized, out hitInfoCurrent, 20))
+        if (Physics.Raycast(gameObject.transform.position, new Vector3(self.velocity.x, 0.0f, self.velocity.z).normalized, out hitInfoCurrent, Mathf.Infinity))
         {
             output = hitInfoCurrent.point;
-            if (Vector3.Distance(output, self.pos) < 0.1f) Destroy(gameObject);
+
+            if (Vector3.Distance(output, gameObject.transform.position) < 0.01f) Destroy(gameObject);
+            Debug.Log(output.ToString("F4"));
+
         }
-        else // CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
+        else if (Mathf.Abs(gameObject.transform.position.x) > globalVariablesTemp.maxBoardX || Mathf.Abs(gameObject.transform.position.y) > globalVariablesTemp.maxBoardY)// CAN'T DETECT A COLLIDER, MUST BE OUT OF BOUNDS
         {
             Destroy(gameObject);
         }
