@@ -74,12 +74,13 @@ public class agentBehaviorTest : MonoBehaviour
     {
 
         self.pos = gameObject.transform.localPosition;
-        debug6 = self.dna.GetMorality();
 
         if (self.dna == null)
         {
             self.dna = new DNA();
         }
+        debug6 = self.dna.GetMorality();
+
         self.morality = self.dna.GetMorality();
 
         selfSimObject = Factory.generate(self, self.dna);
