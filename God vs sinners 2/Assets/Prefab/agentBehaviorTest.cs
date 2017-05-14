@@ -18,13 +18,10 @@ public class agentClassGlobal
 
     public int morality;
 
-    // Reproduction
-    private agentBehaviorTest partner;
-    private bool reproducing;
-
-
     // DNA
     public DNA dna;
+    public DNA mateDNA;
+    private bool mating;
 
     public agentClassGlobal()
     {
@@ -42,8 +39,17 @@ public class agentClassGlobal
         velocity.y = 0.0f;
         velocity.z = 0.0f;
 
-        // By default every AI is single
-        reproducing = false;
+        mating = false;
+    }
+
+    public void setMating(bool mating)
+    {
+        this.mating = mating;
+    }
+
+    public bool isMating()
+    {
+        return this.mating;
     }
 
 }
@@ -53,6 +59,9 @@ public class agentBehaviorTest : MonoBehaviour
     public agentClassGlobal self = new agentClassGlobal();
 
     public AICharacterControl selfSimObject;
+
+    private const float MATING_TIME = 3;
+    private float matingTimeCounter = 0;
 
     public Vector3 debug;
     public Vector3 debug2;
@@ -65,8 +74,12 @@ public class agentBehaviorTest : MonoBehaviour
     {
 
         self.pos = gameObject.transform.localPosition;
-        self.dna = new DNA();
         debug6 = self.dna.GetMorality();
+
+        if (self.dna == null)
+        {
+            self.dna = new DNA();
+        }
         self.morality = self.dna.GetMorality();
 
         selfSimObject = Factory.generate(self, self.dna);
@@ -92,11 +105,32 @@ public class agentBehaviorTest : MonoBehaviour
             if (Vector3.Distance(raycastOutput, gameObject.transform.localPosition) < 0.01f) Destroy(gameObject);
         }
 
-        // calcutate new position
-        if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
-            self.velocity=self.velocity.normalized* (float)selfSimObject.getMaxSpeed();
-        gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+        // When mating (during 3 seconds), the 2 avatars don't move
+        if (self.isMating())
+        {
+            if (this.matingTimeCounter < MATING_TIME)
+            {
+                this.matingTimeCounter += UnityEngine.Time.deltaTime;
+            } else
+            {
+                if (!self.dna.IsMale())
+                {
+                    initializeAgents.CreateChild(gameObject.transform, self);
+                }
+            }
+        } else {
+            // calcutate new position
+            if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
+                self.velocity = self.velocity.normalized * (float)selfSimObject.getMaxSpeed();
+            gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
+            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+
+            self.velocity += Utilities.convert(selfSimObject.V) * UnityEngine.Time.deltaTime;
+            if (float.IsNaN(self.velocity.x))
+            {
+                self.velocity = new Vector3(0, 0, 0);
+            }
+        }
 
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
@@ -108,14 +142,21 @@ public class agentBehaviorTest : MonoBehaviour
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
         Vector3G velocityVector3G = Utilities.convert(self.velocity);
         Vector3G raycastHit3G = Utilities.convert(raycastOutput);
+        
+        // Return DNA if mating
+        DNA mateDNA = selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G, raycastHit3G);
 
-        selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G, raycastHit3G);
-
-        self.velocity += Utilities.convert(selfSimObject.V)* UnityEngine.Time.deltaTime;
-        if (float.IsNaN(self.velocity.x))
+        
+        if (mateDNA != null)
         {
-            self.velocity = new Vector3(0, 0, 0);
+            self.mateDNA = mateDNA;
+
+            if (!self.isMating())
+            {
+                self.setMating(true);
+            }
         }
+
         //        Vector3 v = gameObject.transform.rotation.eulerAngles;
         //        if (v.x < 0) v.x += 360;
         //        if (v.z < 0) v.z += 360;
@@ -136,6 +177,16 @@ public class agentBehaviorTest : MonoBehaviour
             Debug.Log("Dead at the sweet age of:" + selfSimObject.age+". Cause of death:  "+selfSimObject.getDeathCauseString());
             Destroy(gameObject);
 
+        }
+    }
+
+    public void setDNA(DNA dna1, DNA dna2)
+    {
+        self.dna = DNA.Reproduce(dna1, dna2);
+        // Same sex tried to reproduce, remove the agent
+        if (self.dna == null)
+        {
+            this.OnDestroy();
         }
     }
 

@@ -27,7 +27,7 @@ public class AICharacterControl : SimulationObject
     public double k2wall = 1;
     public Vector3G F1;
     private bool destroy;
-    public Vector3G F2, F3,F4;
+    public Vector3G F2, F3,F4, F5attraction;
     public int nbObjects;
     public Vector3G V;
     public Vector3G foward;
@@ -56,10 +56,19 @@ public class AICharacterControl : SimulationObject
 
     private static System.Random rnd = new System.Random();
 
-    public DNA dna;
+    public double matingCooldown = 0;
+
 
     public bool dead=false;
     public double age;
+    public DNA dna;
+    public bool hasMate = false;
+    public bool isMating = false;
+    public AICharacterControl mate = null;
+    // Reproduction
+    private DNA mateDNA;
+    public bool hasMated = false;
+    
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -120,10 +129,14 @@ public class AICharacterControl : SimulationObject
         F2 = new Vector3G(0, 0, 0);
         F3 = new Vector3G(0, 0, 0);
         F4 = new Vector3G(0, 0, 0);
+        F5attraction = new Vector3G(0, 0, 0);
+   
         V = new Vector3G(0, 0, 0);
         raycastHit  = new Vector3G(1000, 1000, 1000);
 
         this.dna = dna;
+        this.mateDNA = null;
+    
     // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
@@ -183,6 +196,7 @@ public class AICharacterControl : SimulationObject
 
         }
             
+        matingCooldown -= deltaT;
         Vector3G deltaVec = position - raycastHit;
         double toWall = deltaVec.Magnitude();
         if (toWall < 2)
@@ -208,7 +222,7 @@ public class AICharacterControl : SimulationObject
         panic = Utilities.Clamp<double>(panic, minPanic, maxPanic);
 
         
-        V = (F1 + F2 + F3 + F4);
+        V = (F1 + F2 + F3 + F4 + F5attraction);
         foreach (KeyValuePair<string, Vector3G> entry in forces)
         {
             if (entry.Key.Equals("flee"))
@@ -223,7 +237,7 @@ public class AICharacterControl : SimulationObject
         if(panic < 0.5 && forces.ContainsKey("flee"))
             forces.Remove("flee");
 
-        V.y = 0;
+
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
@@ -238,12 +252,37 @@ public class AICharacterControl : SimulationObject
     /// <param name="position"></param>
     /// <param name="foward"></param>
     /// <param name="speed"></param>
-    public void update(Vector3G position, Vector3G foward, Vector3G speed, Vector3G raycastHit)
+    public DNA update(Vector3G position, Vector3G foward, Vector3G speed, Vector3G raycastHit)
     {
         this.position = position;
         this.foward = foward;
         this.speed = speed;
         this.raycastHit = raycastHit;
+        if (hasMated)
+        {
+            hasMate = false;
+            mate = null;
+            // Reproduction
+            mateDNA = null;
+            hasMated = false;
+            matingCooldown = 15;
+        }
+
+        // If they found their mated and has not mated, return their mate's dna
+        if (isMating && hasMate)
+        {
+            isMating = false;
+            mate.isMating = false;
+
+            hasMated = true;
+            mate.hasMated = true;
+            return mateDNA;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
 
 
@@ -282,6 +321,26 @@ public class AICharacterControl : SimulationObject
             //            if(s.GetType() == this.GetType())
             //                F3 += avoid((AICharacterControl)s);
 
+            // If they are near enough and they are not mate, they mate
+            if (matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            {
+                // TODO Refusal
+                agent.mateDNA = this.dna;
+                this.mateDNA = agent.dna;
+                this.hasMate = true;
+                agent.hasMate = true;
+                mate = agent;
+                agent.mate = this;
+            }
+            else if (agent == mate)
+            {
+                F5attraction = (double)(repulsiveFroce) * n * -2;
+                if (distancePed1Ped2 < 1)
+                {
+                    isMating = true;
+                    agent.isMating = true;
+                }
+            }
         }
     }
 

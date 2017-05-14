@@ -16,18 +16,41 @@ public class inch : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.relativeVelocity.magnitude > 2)
+        {
+            Debug.Log("Killed by: " + collision.gameObject.name + collision.relativeVelocity.magnitude.ToString());
+            DestroyObject(gameObject);
+            return;
+        }
         Vector3 v = new Vector3(1, 0, 1);
+
         if (collision.gameObject.tag == "Table" || collision.gameObject.tag == "Untagged")
         {
             return;
         }
-        Vector3 direction;
-        direction = this.transform.position + collision.transform.position;
-        direction.y = 0;
-        direction = direction.normalized;
-        ContactPoint contact = collision.contacts[0];
+        else if (collision.gameObject.tag == "God")
+        {
 
-        GetComponent<Rigidbody>().velocity = collision.relativeVelocity.magnitude  * direction * 2.0f;
 
+        }
+        else if (collision.gameObject.tag == "projectile")
+        {
+            if(collision.relativeVelocity.magnitude > 0.05)
+            {
+                DestroyObject(gameObject);
+            }
+
+        }
+        else { 
+            /*
+            Vector3 direction;
+            direction = this.transform.position + collision.transform.position;
+            direction.y = 0;
+            direction = direction.normalized;
+            ContactPoint contact = collision.contacts[0];
+
+            GetComponent<Rigidbody>().velocity = collision.relativeVelocity.magnitude  * direction * 2.0f;
+            */
+        }
     }
 }
