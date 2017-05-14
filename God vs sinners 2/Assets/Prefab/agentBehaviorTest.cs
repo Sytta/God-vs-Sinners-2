@@ -113,7 +113,8 @@ public class agentBehaviorTest : MonoBehaviour
             if (this.matingTimeCounter < MATING_TIME)
             {
                 this.matingTimeCounter += UnityEngine.Time.deltaTime;
-            } else
+            }
+            else
             {
                 if (!self.dna.IsMale())
                 {
@@ -123,7 +124,9 @@ public class agentBehaviorTest : MonoBehaviour
                 self.setMating(false);
                 this.matingTimeCounter = MATING_TIME;
             }
-        } else if (!selfSimObject.isBeingLocked) {
+        }
+        else if (!selfSimObject.isBeingLocked)
+        {
             // calcutate new position
             if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
                 self.velocity = self.velocity.normalized * (float)selfSimObject.getMaxSpeed();
@@ -149,11 +152,11 @@ public class agentBehaviorTest : MonoBehaviour
         Vector3G forVecVector3G = Utilities.convert(self.bodyForVec);
         Vector3G velocityVector3G = Utilities.convert(self.velocity);
         Vector3G raycastHit3G = Utilities.convert(raycastOutput);
-        
+
         // Return DNA if mating
         DNA mateDNA = selfSimObject.update(posVector3G, forVecVector3G, velocityVector3G, raycastHit3G);
 
-        
+
         if (mateDNA != null)
         {
             self.mateDNA = mateDNA;
@@ -202,14 +205,15 @@ public class agentBehaviorTest : MonoBehaviour
             if (selfSimObject.isDead())
             {
 
-            Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
+                Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
+            }
+            else
+            {
+                Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death: UNKNOWN");
+            }
+            selfSimObject.end();
+            SimulationMap.Instance.remove(self.agentID);
+            GameObject.Destroy(gameObject);
         }
-        else
-        {
-            Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death: UNKNOWN");
-        }
-        selfSimObject.end();
-        SimulationMap.Instance.remove(self.agentID);
-        GameObject.Destroy(gameObject);
     }
 }

@@ -52,7 +52,7 @@ public class AICharacterControl : SimulationObject
     public State state;
 
     public double accelMax = 2;
-    public double panicDecay = 0.7;
+    public double panicDecay = 0.5;
 
     private static System.Random rnd = new System.Random();
 
@@ -216,7 +216,7 @@ public class AICharacterControl : SimulationObject
                     specialActionTarget.deathCause = deathCauses.INFIDEL;
                     morality -= 5;
                     morality = Math.Max(0, morality);
-                    SimulationMap.Instance.fleeFrom(specialActionTarget.position, 5);
+                    SimulationMap.Instance.fleeFrom(specialActionTarget.position, 8);
                 }
                 else
                 {
@@ -373,7 +373,7 @@ public class AICharacterControl : SimulationObject
             //                F3 += avoid((AICharacterControl)s);
 
             // If they are near enough and they are not mate, they mate
-            if (!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 70 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
             {
                 // TODO Refusal
                 agent.mateDNA = this.dna;
@@ -408,7 +408,7 @@ public class AICharacterControl : SimulationObject
                 }
                 else
                 {
-                    if(agent.morality+5< morality)
+                    if(panic < 3 && agent.panic < 3 && agent.morality+5< morality)
                     {
                         Debug.Log(id + " Planning to teach " + agent.id);
 

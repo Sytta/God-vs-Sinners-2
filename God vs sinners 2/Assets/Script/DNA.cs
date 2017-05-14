@@ -19,8 +19,8 @@ public class DNA {
     private const int MAX_STUBBORNNESS = 20;
     private const int MIN_LEADERSHIP = 0;
     private const int MAX_LEADERSHIP = 30;
-    private const int MIN_DYING_AGE = 80;
-    private const int MAX_DYING_AGE = 120;
+    private const int MIN_DYING_AGE = 250;
+    private const int MAX_DYING_AGE = 300;
 
     // To mix 2 DNA
     private const float BODY_MIX_THRESHOLD = 0.9f;
