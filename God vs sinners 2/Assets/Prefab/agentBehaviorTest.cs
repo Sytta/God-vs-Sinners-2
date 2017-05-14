@@ -23,6 +23,8 @@ public class agentClassGlobal
     public DNA mateDNA;
     private bool mating;
 
+    public float scale;
+
     public agentClassGlobal()
     {
         agentID = IdGenerator.Instance.genID();
@@ -66,8 +68,8 @@ public class agentBehaviorTest : MonoBehaviour
     public List<Transform> males;
     public List<Transform> females;
 
-    public double debug;
-    public double debug2;
+    public Vector3 debug;
+    public Vector3 debug2;
     public bool debug3;
     public AICharacterControl debug4;
     public bool debug5;
@@ -77,6 +79,7 @@ public class agentBehaviorTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        self.scale = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
 
         self.pos = gameObject.transform.localPosition;
 
@@ -92,7 +95,8 @@ public class agentBehaviorTest : MonoBehaviour
         debug5 = true;
 
         Transform toUse = null;
-        if((bool)self.dna.dnaCharacteristics["gender"])
+
+        if ((bool)self.dna.dnaCharacteristics["gender"])
         {
             toUse = males[UnityEngine.Random.Range(0, males.Count - 1)];
         }
@@ -104,12 +108,19 @@ public class agentBehaviorTest : MonoBehaviour
 
         toUse = Instantiate(toUse, transform.position, transform.rotation);
         toUse.parent = transform;
+        toUse.transform.localScale= new Vector3(20, 20, 20);
         //toUse.GetComponent<Animation>().wrapMode = WrapMode.Loop;
     }
 
+    public int idToCatch = -1;
     // Update is called once per frame
     void Update()
     {
+        
+        if(self.agentID == idToCatch)
+        {
+            idToCatch.GetHashCode();
+        }
         Vector3 norm = new Vector3((float)selfSimObject.speed.x, (float)selfSimObject.speed.y, (float)selfSimObject.speed.z);
 
         Vector2G zihui = new Vector2G(norm.z, norm.x);
@@ -168,13 +179,10 @@ public class agentBehaviorTest : MonoBehaviour
                 self.velocity = new Vector3(0, 0, 0);
             }
         }
+        debug = self.velocity;
+        debug2 = Utilities.convert(selfSimObject.V);
 
-        debug = selfSimObject.morality;
-        debug2 = selfSimObject.specialActionCooldown;
-        debug3 = selfSimObject.specialActionStarted;
-        debug4 = selfSimObject.specialActionTarget;
-        debug5 = selfSimObject.isBeingLocked;
-        debug6 = selfSimObject.specialActionDuration;
+
         gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
