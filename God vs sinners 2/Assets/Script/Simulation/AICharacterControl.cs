@@ -52,7 +52,7 @@ public class AICharacterControl : SimulationObject
     public State state;
 
     public double accelMax = 2;
-    public double panicDecay = 0.7;
+    public double panicDecay = 0.5;
 
     private static System.Random rnd = new System.Random();
 
@@ -68,7 +68,19 @@ public class AICharacterControl : SimulationObject
     // Reproduction
     private DNA mateDNA;
     public bool hasMated = false;
-    
+
+
+    public double morality;
+
+    public double specialActionCooldown=30;
+    public bool specialActionStarted = false;
+
+    public AICharacterControl specialActionTarget=null;
+
+    public bool isBeingLocked = false;
+
+    public double specialActionDuration=2;
+
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -120,7 +132,9 @@ public class AICharacterControl : SimulationObject
     {
         this.forces = new Dictionary<string, Vector3G>();
 
-        age = genRandomFloat(0,dna.GetMorality());
+        morality = dna.GetMorality();
+        specialActionCooldown = genRandomFloat(15, 30);
+        age = genRandomFloat(0,dna.GetMortality());
         this.position = position;
         this.foward = foward;
         this.speed = new Vector3G(0, 0, 0);
@@ -187,6 +201,43 @@ public class AICharacterControl : SimulationObject
     /// <returns></returns>
     public override bool genesisUpdate(double deltaT)
     {
+        if ((morality < 25 || morality > 75) && !specialActionStarted)
+            specialActionCooldown -= deltaT;
+
+
+        if (specialActionStarted)
+        {
+            specialActionDuration -= deltaT;
+            if(specialActionDuration < 0)
+            {
+                if (morality < 25)
+                {
+                    specialActionTarget.dead = true;
+                    specialActionTarget.deathCause = deathCauses.INFIDEL;
+                    morality -= 5;
+                    morality = Math.Max(0, morality);
+                    SimulationMap.Instance.fleeFrom(specialActionTarget.position, 8);
+                }
+                else
+                {
+                    morality += 5;
+                    morality = Math.Min(100, morality);
+                    specialActionTarget.morality += 5;
+                    specialActionTarget.morality = Math.Min(100, morality);
+
+
+                }
+
+                specialActionTarget.isBeingLocked = false;
+                specialActionCooldown = 30;
+                specialActionStarted = false;
+                specialActionTarget = null;
+                isBeingLocked = false;
+                specialActionDuration = 2;
+            }
+        }
+
+       
 
         age += deltaT;
         if (age > dna.GetMortality())
@@ -322,7 +373,7 @@ public class AICharacterControl : SimulationObject
             //                F3 += avoid((AICharacterControl)s);
 
             // If they are near enough and they are not mate, they mate
-            if (age>30 &&age < 80 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
             {
                 // TODO Refusal
                 agent.mateDNA = this.dna;
@@ -340,6 +391,38 @@ public class AICharacterControl : SimulationObject
                     isMating = true;
                     agent.isMating = true;
                 }
+            }
+
+            if(!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
+            {
+                if (morality < 25)
+                {
+                    float epsilon = genRandomFloat(0, 1);
+                    if (epsilon < (1 - (morality / 25.0f)  ))
+                    {
+                        Debug.Log(id + " Plotting to kill " + agent.id + "Epsilon :"+ epsilon + "Threshold: " + (1 - (morality / 25)));
+                        specialActionStarted = true;
+                        agent.isBeingLocked = true;
+                        specialActionTarget = agent;
+                    }
+                }
+                else
+                {
+                    if(panic < 3 && agent.panic < 3 && agent.morality+5< morality)
+                    {
+                        Debug.Log(id + " Planning to teach " + agent.id);
+
+                        specialActionStarted = true;
+                        agent.isBeingLocked = true;
+                        specialActionTarget = agent;
+                    }
+                    
+                }
+                
+            }
+            if (specialActionStarted && agent == specialActionTarget)
+            {
+                F5attraction = (double)(repulsiveFroce) * n * -2;
             }
         }
     }
@@ -378,5 +461,10 @@ public class AICharacterControl : SimulationObject
         return OBJECTTYPE.PED;
     }
 
+    public void end()
+    {
+        if (specialActionTarget != null)
+            specialActionTarget.isBeingLocked = false;
+    }
 
 }
