@@ -282,13 +282,13 @@ public class SimulationMap
 
 
 
-    public void fleeFrom(Vector3G source, double magnitudeRadius)
+    public void fleeFrom(Vector3G source, double magnitudeRadius,float moralityEffect = 0)
     {
         foreach (KeyValuePair<long, SimulationObject> entry in objects)
         {
             if (entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
             {
-                ((AICharacterControl)entry.Value).fleeFrom(source, magnitudeRadius);
+                ((AICharacterControl)entry.Value).fleeFrom(source, magnitudeRadius,moralityEffect);
             }
         }
     }

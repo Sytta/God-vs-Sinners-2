@@ -79,7 +79,7 @@ public class AICharacterControl : SimulationObject
 
     public bool isBeingLocked = false;
 
-    public double specialActionDuration=3;
+    public double specialActionDuration=2;
 
     public float scale;
     public agentClassGlobal agentGlobal;
@@ -171,7 +171,7 @@ public class AICharacterControl : SimulationObject
         accelToCenter = accelSpeed;
     }
 
-    public void fleeFrom(Vector3G source, double magnitudeRadius)
+    public void fleeFrom(Vector3G source, double magnitudeRadius,float moralityEffect = 0)
     {
         if (forces.ContainsKey("flee"))
         {
@@ -180,7 +180,13 @@ public class AICharacterControl : SimulationObject
 
         Vector3G deltaVec = position-source;
         double dist = (deltaVec).Magnitude();
-        panic = (1 - dist / magnitudeRadius) * 10;
+        if (dist > magnitudeRadius)
+            return;
+
+        double effect = 1 - dist / magnitudeRadius;
+        morality += effect * moralityEffect;
+
+        panic = Math.Max((1 - dist / magnitudeRadius) * 10, panic);
 
         panic = Utilities.Clamp<double>(panic, minPanic, maxPanic);
         if (panic > 1)
@@ -240,17 +246,22 @@ public class AICharacterControl : SimulationObject
                 {
                     specialActionTarget.dead = true;
                     specialActionTarget.deathCause = deathCauses.INFIDEL;
-                    morality -= 5;
                     morality = Math.Max(0, morality);
-                    SimulationMap.Instance.fleeFrom(specialActionTarget.position, 8);
+                    SimulationMap.Instance.fleeFrom(specialActionTarget.position, 8,-10);
                 }
                 else
                 {
-                    morality += 5;
-                    morality = Math.Min(100, morality);
-                    specialActionTarget.morality += 5;
-                    specialActionTarget.morality = Math.Min(100, morality);
-
+                    float epsilon = genRandomFloat(0, 1);
+                    if (epsilon < morality / 100)
+                    {
+                        morality += 5;
+                        morality = Math.Min(100, morality);
+                    }
+                    if (epsilon < specialActionTarget.morality / 100)
+                    {
+                        specialActionTarget.morality += 5;
+                        specialActionTarget.morality = Math.Min(100, morality);
+                    }
 
                 }
                 specialActionTarget.isBeingLocked = false;
@@ -258,7 +269,7 @@ public class AICharacterControl : SimulationObject
                 specialActionStarted = false;
                 specialActionTarget = null;
                 isBeingLocked = false;
-                specialActionDuration = 3;
+                specialActionDuration = 2;
             }
         }
 
@@ -423,18 +434,22 @@ public class AICharacterControl : SimulationObject
                 }
             }
 
-            if(!hasMate && !agent.hasMate && !isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5 && age > 20)
+            if(!hasMate && !agent.hasMate && !isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 10 && age > 20 && agent.dna.GetMortality() - agent.age > 10)
             {
                 if (morality < 25)
                 {
-                    float epsilon = genRandomFloat(0, 1);
-                    if (epsilon < (1 - (morality / 25.0f)  ))
+                    if (agent.morality > 50)
                     {
-                        Debug.Log(id + " Plotting to kill " + agent.id + "Epsilon :"+ epsilon + "Threshold: " + (1 - (morality / 25)));
-                        specialActionStarted = true;
-                        agent.isBeingLocked = true;
-                        specialActionTarget = agent;
-                        killFlag = true;
+                        float epsilon = genRandomFloat(0, 1);
+
+                        if (epsilon < (1 - (morality / 25.0f)))
+                        {
+                            Debug.Log(id + " Plotting to kill " + agent.id + "Epsilon :" + epsilon + "Threshold: " + (1 - (morality / 25)));
+                            specialActionStarted = true;
+                            agent.isBeingLocked = true;
+                            specialActionTarget = agent;
+                            killFlag = true;
+                        }
                     }
                 }
                 else if (morality > 75)
