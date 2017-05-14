@@ -119,6 +119,9 @@ public class agentBehaviorTest : MonoBehaviour
                 {
                     initializeAgents.CreateChild(gameObject.transform, self);
                 }
+
+                self.setMating(false);
+                this.matingTimeCounter = MATING_TIME;
             }
         } else if (!selfSimObject.isBeingLocked) {
             // calcutate new position
@@ -194,8 +197,10 @@ public class agentBehaviorTest : MonoBehaviour
 
     void OnDestroy()
     {
-        if (selfSimObject.isDead())
+        if (selfSimObject != null)
         {
+            if (selfSimObject.isDead())
+            {
 
             Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
         }
@@ -205,7 +210,6 @@ public class agentBehaviorTest : MonoBehaviour
         }
         selfSimObject.end();
         SimulationMap.Instance.remove(self.agentID);
-        
         GameObject.Destroy(gameObject);
     }
 }
