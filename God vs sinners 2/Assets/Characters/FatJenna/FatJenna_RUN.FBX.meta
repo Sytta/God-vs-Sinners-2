@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a5bd19747aa4f1540a98e6b5c59dd6a7
-timeCreated: 1494763583
+guid: c393ecd3d0b7b27409d4a09c59f91136
+timeCreated: 1494774556
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -124,7 +124,7 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 106
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -243,15 +243,15 @@ ModelImporter:
         weight: 1
       - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/fem_head_mesh
         weight: 1
+      - path: FL_legs_mesh
+        weight: 1
+      - path: FL_torso_mesh
+        weight: 1
       - path: FL_head_mesh
         weight: 1
       - path: FL_left_arm_mesh
         weight: 1
-      - path: FL_legs_mesh
-        weight: 1
       - path: FL_right_arm_mesh
-        weight: 1
-      - path: FL_torso_mesh
         weight: 1
       maskType: 3
       maskSource: {instanceID: 0}

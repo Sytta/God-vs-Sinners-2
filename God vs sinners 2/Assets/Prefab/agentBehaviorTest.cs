@@ -96,13 +96,28 @@ public class agentBehaviorTest : MonoBehaviour
 
         Transform toUse = null;
 
-        if ((bool)self.dna.dnaCharacteristics["gender"])
+        if(self.dna.IsMale())
         {
-            toUse = males[UnityEngine.Random.Range(0, males.Count - 1)];
+            //toUse = males[UnityEngine.Random.Range(0, males.Count - 1)];
+            if (self.dna.GetWeight() > 60)
+            {
+                toUse = males[1];
+            } else
+            {
+                toUse = males[0];
+            }
         }
         else
         {
-            toUse = females[UnityEngine.Random.Range(0, females.Count - 1)];
+            //toUse = females[UnityEngine.Random.Range(0, females.Count - 1)];
+            if (self.dna.GetWeight() > 60)
+            {
+                toUse = females[1];
+            }
+            else
+            {
+                toUse = females[0];
+            }
         }
 
 
