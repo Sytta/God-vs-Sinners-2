@@ -141,9 +141,9 @@ public class DNA {
         return (int)this.dnaCharacteristics["dyingAge"];
     }
 
-    public float GetWeight()
+    public int GetWeight()
     {
-        return (float)this.dnaCharacteristics["weight"];
+        return (int)this.dnaCharacteristics["weight"];
     }
 
     public void Print()
