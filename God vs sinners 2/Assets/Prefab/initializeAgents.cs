@@ -18,7 +18,7 @@ public class initializeAgents : MonoBehaviour {
     public float tableSize;
     void Start () {
         tableSize = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
-        for (int i = 0; i < 250; i++)
+        for (int i = 0; i < 40; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
