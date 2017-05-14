@@ -12,7 +12,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 5;  // Newton
+    public double Ai = 0.05;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 4;
     public double minDistanceInteractionSqrt = 4*4;
@@ -155,7 +155,6 @@ public class AICharacterControl : SimulationObject
         this.dna = dna;
         this.mateDNA = null;
         this.scale = scale;
-        Debug.Log(scale);
     // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
@@ -333,10 +332,9 @@ public class AICharacterControl : SimulationObject
         if (isMating && hasMate)
         {
             isMating = false;
-            mate.isMating = false;
 
             hasMated = true;
-            mate.hasMated = true;
+            Debug.Log(id + " sending it's dna!");
             return mateDNA;
         }
         else
@@ -349,6 +347,7 @@ public class AICharacterControl : SimulationObject
 
     public double panicTransmission = 5;
     public double deltaPanic = 0;
+    public bool killFlag, preachFlag;
     /// <summary>
     /// Interact with another character
     /// </summary>
@@ -375,7 +374,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai / (distancePed1Ped2* distancePed1Ped2);
+            double repulsiveFroce = Ai * Math.Exp((distancePed1Ped2));
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
@@ -383,7 +382,7 @@ public class AICharacterControl : SimulationObject
             //                F3 += avoid((AICharacterControl)s);
 
             // If they are near enough and they are not mate, they mate
-            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && (agent.dna.IsMale() != this.dna.IsMale()) && !agent.hasMate && !this.hasMate)
             {
                 // TODO Refusal
                 agent.mateDNA = this.dna;
@@ -403,7 +402,7 @@ public class AICharacterControl : SimulationObject
                 }
             }
 
-            if(!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
+            if(!isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
             {
                 if (morality < 25)
                 {
@@ -414,6 +413,7 @@ public class AICharacterControl : SimulationObject
                         specialActionStarted = true;
                         agent.isBeingLocked = true;
                         specialActionTarget = agent;
+                        killFlag = true;
                     }
                 }
                 else
@@ -425,6 +425,7 @@ public class AICharacterControl : SimulationObject
                         specialActionStarted = true;
                         agent.isBeingLocked = true;
                         specialActionTarget = agent;
+                        preachFlag= true;
                     }
                     
                 }

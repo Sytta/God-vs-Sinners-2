@@ -36,7 +36,9 @@ ModelImporter:
     400026: transform44
     400028: transform45
     2300000: pCube172
+    2300002: //RootNode
     3300000: pCube172
+    3300002: //RootNode
     4300000: pCube172
   materials:
     importMaterials: 1
