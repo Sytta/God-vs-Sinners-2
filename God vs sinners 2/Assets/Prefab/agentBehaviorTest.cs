@@ -161,6 +161,7 @@ public class agentBehaviorTest : MonoBehaviour
         // When mating (during 3 seconds), the 2 avatars don't move
         if (self.isMating())
         {
+            Debug.Log(self.agentID + "is mating");
             if (this.matingTimeCounter < MATING_TIME)
             {
                 this.matingTimeCounter += UnityEngine.Time.deltaTime;
