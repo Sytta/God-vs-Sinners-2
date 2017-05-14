@@ -120,7 +120,7 @@ public class AICharacterControl : SimulationObject
     {
         this.forces = new Dictionary<string, Vector3G>();
 
-        age = 0;
+        age = genRandomFloat(0,dna.GetMorality());
         this.position = position;
         this.foward = foward;
         this.speed = new Vector3G(0, 0, 0);
@@ -322,7 +322,7 @@ public class AICharacterControl : SimulationObject
             //                F3 += avoid((AICharacterControl)s);
 
             // If they are near enough and they are not mate, they mate
-            if (matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            if (age>30 &&age < 80 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
             {
                 // TODO Refusal
                 agent.mateDNA = this.dna;

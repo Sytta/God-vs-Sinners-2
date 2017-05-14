@@ -173,9 +173,9 @@ public class agentBehaviorTest : MonoBehaviour
 
         if (selfSimObject.isDead())
         {
-            debug5 = false;
 
-            Debug.Log("Dead at the sweet age of:" + selfSimObject.age+". Cause of death:  "+selfSimObject.getDeathCauseString());
+            Debug.Log("ID:" +self.agentID+ " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
+
             Destroy(gameObject);
 
         }
@@ -193,7 +193,16 @@ public class agentBehaviorTest : MonoBehaviour
 
     void OnDestroy()
     {
-        SimulationMap.Instance.remove(self.agentID);
+        if (selfSimObject.isDead())
+        {
+
+            Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
+        }
+        else
+        {
+            Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death: UNKNOWN");
+        }
+            SimulationMap.Instance.remove(self.agentID);
         GameObject.Destroy(gameObject);
     }
 }

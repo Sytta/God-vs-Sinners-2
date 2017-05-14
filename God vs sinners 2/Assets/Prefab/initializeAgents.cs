@@ -41,6 +41,7 @@ public class initializeAgents : MonoBehaviour {
         Transform a = Instantiate(agent1, transform.position + new Vector3(Random.value * 0.05f, 0, Random.value * 0.05f), transform.rotation);
         a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
 
+        Debug.Log(a.name + " born! Mother is " + ai.agentID);
         a.GetComponent<agentBehaviorTest>().setDNA(ai.dna, ai.mateDNA);
         a.parent = GameObject.FindGameObjectWithTag("Table").transform;
         a.localScale = new Vector3(1f, 1f, 1f);
