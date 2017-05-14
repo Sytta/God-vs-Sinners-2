@@ -11,17 +11,27 @@ public class inch : MonoBehaviour {
 
     //public static Vector3 previous = new Vector3(0, 0, 0);
 
-	// Update is called once per frame
-	void Update () {
-        //Vector3 velocity = (transform.position - previous).normalized;
-        //previous = transform.position;
+    // Update is called once per frame
+    void Update() {
+        Animator anim = gameObject.GetComponent<Animator>();
+        if (anim != null)
+        {
+            if (gameObject.transform.position.y > 1.01 || gameObject.transform.position.y < 0.99)
+            {
+                anim.enabled = false;
+            }
+            else
+            {
+                anim.enabled = true;
+            }
 
-       // Vector3 norm = gameObject.GetComponent<Rigidbody>().velocity.normalized;
+            RaycastHit hit = new RaycastHit();
 
-       // Vector2G zihui = new Vector2G(norm.x, norm.z);
-        //transform.rotation = Quaternion.Euler(gameObject.GetComponent<Rigidbody>().velocity.x, (float)(zihui.absAngle() * (180 / System.Math.PI)), gameObject.GetComponent<Rigidbody>().velocity.z);
-        //transform.rotation = Quaternion.Euler(gameObject.GetComponent<Rigidbody>().velocity.x, (float)(zihui.absAngle() * (180 / System.Math.PI)), gameObject.GetComponent<Rigidbody>().velocity.z);
-
+            if (!Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, out hit))
+            {
+                anim.enabled = false;
+            }
+        }
 
 
     }
