@@ -63,6 +63,8 @@ public class agentBehaviorTest : MonoBehaviour
     private const float MATING_TIME = 3;
     private float matingTimeCounter = 0;
 
+    public List<Transform> males;
+    public List<Transform> females;
 
     public double debug;
     public double debug2;
@@ -70,6 +72,8 @@ public class agentBehaviorTest : MonoBehaviour
     public AICharacterControl debug4;
     public bool debug5;
     public double debug6;
+
+
     // Use this for initialization
     void Start()
     {
@@ -86,6 +90,21 @@ public class agentBehaviorTest : MonoBehaviour
 
         selfSimObject = Factory.generate(self, self.dna);
         debug5 = true;
+
+        Transform toUse = null;
+        if((bool)self.dna.dnaCharacteristics["gender"])
+        {
+            toUse = males[UnityEngine.Random.Range(0, males.Count - 1)];
+        }
+        else
+        {
+            toUse = females[UnityEngine.Random.Range(0, females.Count - 1)];
+        }
+
+
+        toUse = Instantiate(toUse, transform.position, transform.rotation);
+        toUse.parent = transform;
+        //toUse.GetComponent<Animation>().wrapMode = WrapMode.Loop;
     }
 
     // Update is called once per frame

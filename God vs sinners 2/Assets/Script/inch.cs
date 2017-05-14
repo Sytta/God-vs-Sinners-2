@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class inch : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        
+    }
 
     //public static Vector3 previous = new Vector3(0, 0, 0);
 
@@ -32,7 +32,7 @@ public class inch : MonoBehaviour {
                 anim.enabled = false;
             }
         }
-
+        transform.GetChild(0).transform.position = transform.position;
 
     }
 
