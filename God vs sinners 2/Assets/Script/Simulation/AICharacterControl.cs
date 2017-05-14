@@ -376,7 +376,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai / (distancePed1Ped2);
+            double repulsiveFroce = Ai * Math.Exp((distancePed1Ped2));
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
@@ -396,7 +396,7 @@ public class AICharacterControl : SimulationObject
             }
             else if (agent == mate)
             {
-                F5attraction =  n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -2;
                 if (distancePed1Ped2 < 1)
                 {
                     isMating = true;
@@ -435,7 +435,7 @@ public class AICharacterControl : SimulationObject
             }
             if (specialActionStarted && agent == specialActionTarget)
             {
-                F5attraction =  n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -2;
             }
         }
     }

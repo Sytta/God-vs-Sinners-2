@@ -133,7 +133,7 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        debug3 = self.isMating();
         if (selfSimObject.preachFlag)
         {
             selfSimObject.preachFlag = false;
