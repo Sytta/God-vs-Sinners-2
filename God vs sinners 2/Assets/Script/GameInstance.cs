@@ -38,7 +38,7 @@ public class GameInstance : MonoBehaviour
     }
     public void ToMainGame()
     {
-        SceneManager.LoadScene("PanicTestSceneVR", LoadSceneMode.Single);
+        SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
         //MenuMusic.GetComponent<AudioSource>().Stop();
         //MainMusic.GetComponent<AudioSource>().Play();
     }
