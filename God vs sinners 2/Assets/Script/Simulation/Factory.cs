@@ -9,7 +9,7 @@ public abstract class Factory
     {
         AICharacterControl character =  new AICharacterControl(Utilities.convert(agent.pos),
                                         Utilities.convert(agent.bodyForVec),
-                                        agent.agentID,dna, agent.scale);
+                                        agent.agentID,dna, agent.scale,agent);
         SimulationMap.Instance.add(character);
 
 

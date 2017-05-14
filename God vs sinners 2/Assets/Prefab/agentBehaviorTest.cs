@@ -6,6 +6,26 @@ using UnityEngine;
 // TODO : CREATE A BOARD OBJECT FOR THE RANDOM GENERATION OF AGENTS
 public class agentClassGlobal
 {
+
+    int currentAnim = 4;
+    public void start(int type)
+    {
+        if (currentAnim != 2)
+        {
+            if (type != currentAnim)
+            {
+                //TODO call new anim
+            }
+            currentAnim = type;
+            //0 kill; 1 preach 2 sex 3 run 4 walk 5 still
+        }
+    }
+
+    public void end()
+    {
+        currentAnim = 4;
+    }
+
     public long agentID;
 
     // POSITIONS
@@ -76,6 +96,7 @@ public class agentBehaviorTest : MonoBehaviour
     public AICharacterControl debug4;
     public bool debug5;
     public double debug6;
+
 
 
     // Use this for initialization
@@ -187,7 +208,7 @@ public class agentBehaviorTest : MonoBehaviour
                 {
                     initializeAgents.CreateChild(gameObject.transform, self);
                 }
-
+                self.end();
                 //self.setMating(false);
                 this.matingTimeCounter = MATING_TIME;
             }
@@ -232,6 +253,7 @@ public class agentBehaviorTest : MonoBehaviour
             if (!self.isMating())
             {
                 self.setMating(true);
+                self.start(2);
                 GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().createBubble(transform, 1);
 
             }

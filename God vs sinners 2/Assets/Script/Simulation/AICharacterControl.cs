@@ -82,6 +82,7 @@ public class AICharacterControl : SimulationObject
     public double specialActionDuration=3;
 
     public float scale;
+    public agentClassGlobal agentGlobal;
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -130,10 +131,11 @@ public class AICharacterControl : SimulationObject
     /// <param name="foward"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public AICharacterControl(Vector3G position, Vector3G foward, long idS, DNA dna,float scale)
+    public AICharacterControl(Vector3G position, Vector3G foward, long idS, DNA dna,float scale, agentClassGlobal global)
     {
         this.forces = new Dictionary<string, Vector3G>();
 
+        agentGlobal = global;
         morality = dna.GetMorality();
         specialActionCooldown = genRandomFloat(15, 30);
         age = genRandomFloat(0,dna.GetMortality());
@@ -208,6 +210,27 @@ public class AICharacterControl : SimulationObject
             specialActionCooldown -= deltaT;
 
 
+        if (isBeingLocked)
+        {
+            agentGlobal.start(5);
+        }
+        else if (specialActionStarted)
+        {
+            if (morality < 25)
+            {
+                agentGlobal.start(0);
+            }
+            else
+                agentGlobal.start(1);
+        }
+        else if (panic < 4)
+        {
+            agentGlobal.start(4);
+        }
+        else
+        {
+            agentGlobal.start(3);
+        }
         if (specialActionStarted)
         {
             specialActionDuration -= deltaT;
@@ -230,7 +253,6 @@ public class AICharacterControl : SimulationObject
 
 
                 }
-
                 specialActionTarget.isBeingLocked = false;
                 specialActionCooldown = 30;
                 specialActionStarted = false;
