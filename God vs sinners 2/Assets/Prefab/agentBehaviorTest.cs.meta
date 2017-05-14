@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 0410c6e23c4e03045a0df65079d58487
-timeCreated: 1494644196
+timeCreated: 1494788910
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - male_fat: {instanceID: 0}
+  - male_normal: {instanceID: 0}
+  - female_fat: {instanceID: 0}
+  - female_normal: {instanceID: 0}
+  - gore: {fileID: 1673222985374108, guid: a8f339f2cb65c4d4abde19ba4fba6c35, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

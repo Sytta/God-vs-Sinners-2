@@ -298,6 +298,9 @@ public class agentBehaviorTest : MonoBehaviour
         if (selfSimObject != null)
         {
             GameObject obj = Instantiate(gore, transform.position, transform.rotation);
+            //obj.transform.parent = GameObject.FindGameObjectWithTag("Table").transform;
+            obj.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            //obj.GetComponent<Rigidbody>().velocity = 
 
             if (selfSimObject.isDead())
             {
