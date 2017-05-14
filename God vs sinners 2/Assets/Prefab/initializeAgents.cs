@@ -21,7 +21,7 @@ public class initializeAgents : MonoBehaviour {
         for (int i = 0; i < 100; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
-            a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
+            a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
             a.localScale = new Vector3(1, 1, 1  );
 

@@ -41,7 +41,6 @@ public class inch : MonoBehaviour {
             }
         }
         transform.GetChild(0).transform.position = transform.position;
-        setAnmationDefault();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -92,13 +91,11 @@ public class inch : MonoBehaviour {
         }
     }
 
-    void setAnmationDefault()
+    public void setAnmationDefault()
     {
-
-        Animator animator = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load(sAnim) as RuntimeAnimatorController;
+        anime(sAnim);
     }
-    void setAnmationAttack()
+    public void setAnmationAttack()
     {
         String name;
         if (sAnim.Contains("billy"))
@@ -122,11 +119,10 @@ public class inch : MonoBehaviour {
             name = sAnim;
         }
 
-        Animator animator = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load(name) as RuntimeAnimatorController;
+        anime(name);
     }
 
-    void setAnmationRun()
+    public void setAnmationRun()
     {
         String name;
         if (sAnim.Contains("billy"))
@@ -150,11 +146,10 @@ public class inch : MonoBehaviour {
             name = sAnim;
         }
 
-        Animator animator = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load(name) as RuntimeAnimatorController;
+        anime(name);
     }
 
-    void setAnmationPraise()
+    public void setAnmationPraise()
     {
         String name;
         if (sAnim.Contains("billy"))
@@ -178,7 +173,13 @@ public class inch : MonoBehaviour {
             name = sAnim;
         }
 
+        anime(name);
+    }
+
+    void anime(String path)
+    {
         Animator animator = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load(name) as RuntimeAnimatorController;
+        animator.runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(path, typeof(RuntimeAnimatorController));
+        animator.enabled = true;
     }
 }

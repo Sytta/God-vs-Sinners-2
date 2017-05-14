@@ -8,13 +8,44 @@ public class agentClassGlobal
 {
 
     int currentAnim = 4;
+    int type = 4;
     public void start(int type)
+    {
+        this.type = type;
+    }
+
+    public void update()
     {
         if (currentAnim != 2)
         {
             if (type != currentAnim)
             {
                 //TODO call new anim
+                inch me = obj.GetComponent<inch>();
+                if (type == 0)
+                {
+                    me.setAnmationAttack();
+                }
+                else if (type == 1)
+                {
+                    me.setAnmationPraise();
+                }
+                else if (type == 2)
+                {
+                    me.setAnmationPraise();
+                }
+                else if (type == 3)
+                {
+                    me.setAnmationRun();
+                }
+                else if (type == 4)
+                {
+                    me.setAnmationDefault();
+                }
+                else if (type == 5)
+                {
+                    me.setAnmationPraise();
+                }
             }
             currentAnim = type;
             //0 kill; 1 preach 2 sex 3 run 4 walk 5 still
@@ -45,6 +76,7 @@ public class agentClassGlobal
 
     public float scale;
 
+    public GameObject obj;
     public agentClassGlobal()
     {
         agentID = IdGenerator.Instance.genID();
@@ -102,6 +134,7 @@ public class agentBehaviorTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        self.obj = gameObject;
         self.scale = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
 
         self.pos = gameObject.transform.localPosition;
@@ -154,6 +187,7 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        self.update();
         debug3 = self.isMating();
         if (selfSimObject.preachFlag)
         {
