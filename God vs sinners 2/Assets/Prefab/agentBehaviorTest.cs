@@ -65,8 +65,10 @@ public class agentBehaviorTest : MonoBehaviour
     private const float MATING_TIME = 3;
     private float matingTimeCounter = 0;
 
-    public List<Transform> males;
-    public List<Transform> females;
+    public Transform male_fat;
+    public Transform male_normal;
+    public Transform female_fat;
+    public Transform female_normal;
 
     public Vector3 debug;
     public Vector3 debug2;
@@ -101,10 +103,10 @@ public class agentBehaviorTest : MonoBehaviour
             //toUse = males[UnityEngine.Random.Range(0, males.Count - 1)];
             if (self.dna.GetWeight() > 60)
             {
-                toUse = males[1];
+                toUse = male_fat;
             } else
             {
-                toUse = males[0];
+                toUse = male_normal;
             }
         }
         else
@@ -112,11 +114,11 @@ public class agentBehaviorTest : MonoBehaviour
             //toUse = females[UnityEngine.Random.Range(0, females.Count - 1)];
             if (self.dna.GetWeight() > 60)
             {
-                toUse = females[1];
+                toUse = female_fat;
             }
             else
             {
-                toUse = females[0];
+                toUse = female_normal;
             }
         }
 
@@ -168,12 +170,12 @@ public class agentBehaviorTest : MonoBehaviour
             }
             else
             {
-                if (!self.dna.IsMale())
-                {
-                    initializeAgents.CreateChild(gameObject.transform, self);
-                }
+                //if (!self.dna.IsMale())
+                //{
+                initializeAgents.CreateChild(gameObject.transform, self);
+                //}
 
-                self.setMating(false);
+                //self.setMating(false);
                 this.matingTimeCounter = MATING_TIME;
             }
         }

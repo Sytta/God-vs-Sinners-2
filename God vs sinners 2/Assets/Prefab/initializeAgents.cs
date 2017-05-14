@@ -46,7 +46,7 @@ public class initializeAgents : MonoBehaviour {
     public static void CreateChild(Transform transform, agentClassGlobal ai)
     {
         Transform agent1 = GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().Agent1;
-        Transform a = Instantiate(agent1, transform.position + new Vector3(Random.value * 0.05f, 0, Random.value * 0.05f), transform.rotation);
+        Transform a = Instantiate(agent1, transform.position + new Vector3(Random.value * 0.01f, 0, Random.value * 0.01f), transform.rotation);
         a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
 
         Debug.Log(a.name + " born! Mother is " + ai.agentID);

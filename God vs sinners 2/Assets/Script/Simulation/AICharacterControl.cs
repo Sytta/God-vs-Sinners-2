@@ -383,7 +383,7 @@ public class AICharacterControl : SimulationObject
             //                F3 += avoid((AICharacterControl)s);
 
             // If they are near enough and they are not mate, they mate
-            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && agent.dna.IsMale() != this.dna.IsMale() && !agent.hasMate && !this.hasMate)
+            if (panic < 3 && agent.panic < 3 &&!isBeingLocked && !agent.isBeingLocked && !specialActionStarted && !agent.specialActionStarted&& age>20 &&age < 200 && matingCooldown <= 0 && agent.matingCooldown <= 0 && (agent.dna.IsMale() != this.dna.IsMale()) && !agent.hasMate && !this.hasMate)
             {
                 // TODO Refusal
                 agent.mateDNA = this.dna;

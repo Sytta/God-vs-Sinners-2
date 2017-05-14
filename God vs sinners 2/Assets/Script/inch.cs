@@ -55,6 +55,12 @@ public class inch : MonoBehaviour {
 
 
         }
+        else if (collision.gameObject.tag == "TempColliderCube")
+        {
+            Vector3 m = collision.gameObject.transform.position - gameObject.transform.position;
+
+            GetComponent<agentBehaviorTest>().selfSimObject.goTo(Utilities.convert(m * 10), 1);
+        }
         else if (collision.gameObject.tag == "projectile")
         {
             if(collision.relativeVelocity.magnitude > 0.05)
