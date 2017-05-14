@@ -423,7 +423,7 @@ public class AICharacterControl : SimulationObject
                 }
             }
 
-            if(!isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5 && age > 20)
+            if(!hasMate && !agent.hasMate && !isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5 && age > 20)
             {
                 if (morality < 25)
                 {

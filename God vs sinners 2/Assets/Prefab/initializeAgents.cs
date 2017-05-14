@@ -18,7 +18,7 @@ public class initializeAgents : MonoBehaviour {
     public float tableSize;
     void Start () {
         tableSize = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 40; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
@@ -61,7 +61,6 @@ public class initializeAgents : MonoBehaviour {
         //a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
 
         // Finish mating
-        ai.setMating(false);
 
     }
 
@@ -116,7 +115,7 @@ public class initializeAgents : MonoBehaviour {
 
     public Transform death, love, preach;
 
-    public void createBubble(Transform agent, int type)
+    public void createBubble(Transform agent, int type, float length = 5)
     {
         Transform toUse;
         if (type == 0)
@@ -131,10 +130,10 @@ public class initializeAgents : MonoBehaviour {
             toUse = preach;
         Transform a = Instantiate(toUse, agent.position, agent.rotation);
         a.parent = agent;
-
+        
         a.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         a.localPosition = a.localPosition + new Vector3(0, 5, 0);
-
+        a.GetComponent<Billboard>().length = length;
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    public float length = 3;
+    public float length = 5;
     void start()
     {
 
