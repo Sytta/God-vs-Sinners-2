@@ -38,7 +38,9 @@ ModelImporter:
     400028: transform24
     400030: transform25
     2300000: polySurface200
+    2300002: //RootNode
     3300000: polySurface200
+    3300002: //RootNode
     4300000: polySurface200
   materials:
     importMaterials: 1
