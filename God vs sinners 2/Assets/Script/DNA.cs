@@ -136,6 +136,10 @@ public class DNA {
     {
         return (int)this.dnaCharacteristics["morality"];
     }
+    public int GetMortality()
+    {
+        return (int)this.dnaCharacteristics["dyingAge"];
+    }
 
     public void Print()
     {

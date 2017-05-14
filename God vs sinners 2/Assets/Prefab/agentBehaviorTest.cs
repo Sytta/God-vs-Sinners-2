@@ -58,16 +58,19 @@ public class agentBehaviorTest : MonoBehaviour
     public Vector3 debug2;
     public Vector3 debug3;
     public float debug4;
-
+    public bool debug5;
+    public float debug6;
     // Use this for initialization
     void Start()
     {
+
         self.pos = gameObject.transform.localPosition;
         self.dna = new DNA();
-
+        debug6 = self.dna.GetMorality();
         self.morality = self.dna.GetMorality();
 
         selfSimObject = Factory.generate(self, self.dna);
+        debug5 = true;
     }
 
     // Update is called once per frame
@@ -98,7 +101,7 @@ public class agentBehaviorTest : MonoBehaviour
         debug = Utilities.convert(selfSimObject.destination);
         debug2 = self.velocity;
         debug3 = Utilities.convert(selfSimObject.V);
-        debug4 = (float)selfSimObject.panic;
+        debug4 = (float)selfSimObject.age;
         gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
@@ -113,18 +116,27 @@ public class agentBehaviorTest : MonoBehaviour
         {
             self.velocity = new Vector3(0, 0, 0);
         }
-//        Vector3 v = gameObject.transform.rotation.eulerAngles;
-//        if (v.x < 0) v.x += 360;
-//        if (v.z < 0) v.z += 360;
-//        if (v.x < 345 && v.x > 15)
-//        {
-//            v.x = 0;
-//        }
-//        if (v.z < 345 && v.z > 15)
-//        {
-//            v.z = 0;
-//        }
-//        gameObject.transform.rotation = Quaternion.Euler(v);
+        //        Vector3 v = gameObject.transform.rotation.eulerAngles;
+        //        if (v.x < 0) v.x += 360;
+        //        if (v.z < 0) v.z += 360;
+        //        if (v.x < 345 && v.x > 15)
+        //        {
+        //            v.x = 0;
+        //        }
+        //        if (v.z < 345 && v.z > 15)
+        //        {
+        //            v.z = 0;
+        //        }
+        //        gameObject.transform.rotation = Quaternion.Euler(v);
+
+        if (selfSimObject.isDead())
+        {
+            debug5 = false;
+
+            Debug.Log("Dead at the sweet age of:" + selfSimObject.age+". Cause of death:  "+selfSimObject.getDeathCauseString());
+            Destroy(gameObject);
+
+        }
     }
 
     void OnDestroy()

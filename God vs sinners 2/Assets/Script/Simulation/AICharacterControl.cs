@@ -58,6 +58,8 @@ public class AICharacterControl : SimulationObject
 
     public DNA dna;
 
+    public bool dead=false;
+    public double age;
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -68,8 +70,36 @@ public class AICharacterControl : SimulationObject
 
         return f;
     }
+    
+    public enum deathCauses
+    {
+        AGE,INFIDEL,GOD,OTHER
+    }
+
+    public deathCauses deathCause;
 
 
+    public string getDeathCauseString()
+    {
+        if (!isDead())
+            return null;
+        else
+        {
+            switch (deathCause)
+            {
+                case deathCauses.AGE:
+                    return "Old age";
+                case deathCauses.GOD:
+                    return "Smited by god";
+                case deathCauses.INFIDEL:
+                    return "Killed by filthy infidels";
+                default:
+                    return "Killed by reasons unknowns";
+
+            }
+
+        }
+    }
     /// <summary>
     /// Basic Constructor 
     /// </summary>
@@ -81,6 +111,7 @@ public class AICharacterControl : SimulationObject
     {
         this.forces = new Dictionary<string, Vector3G>();
 
+        age = 0;
         this.position = position;
         this.foward = foward;
         this.speed = new Vector3G(0, 0, 0);
@@ -126,6 +157,11 @@ public class AICharacterControl : SimulationObject
         }
 
     }
+    public bool isDead()
+    {
+        return dead;
+
+    }
     public double getMaxSpeed()
     {
         return ((panic - minPanic) / (maxPanic - minPanic)) * (maxSpeed - minSpeed) + minSpeed;
@@ -139,6 +175,14 @@ public class AICharacterControl : SimulationObject
     public override bool genesisUpdate(double deltaT)
     {
 
+        age += deltaT;
+        if (age > dna.GetMortality())
+        {
+            dead = true;
+            deathCause = deathCauses.AGE;
+
+        }
+            
         Vector3G deltaVec = position - raycastHit;
         double toWall = deltaVec.Magnitude();
         if (toWall < 2)
