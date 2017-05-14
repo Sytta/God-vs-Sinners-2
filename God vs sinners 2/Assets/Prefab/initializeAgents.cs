@@ -17,14 +17,13 @@ public class initializeAgents : MonoBehaviour {
 
     void Start () {
 
-        for (int i = 0; i < 250; i++)
+        for (int i = 0; i < 255; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
-            a.localScale = new Vector3(1f, 1f, 1f);
-
-            a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
+            a.localScale = new Vector3(30f, 30f, 30f);
+            a.localPosition = new Vector3(Random.Range(-50, 50), 1, Random.Range(-50, 50));
 
             // CHECK IF SPAWN INSIDE COLLIDER
             // Collider[] collidersList = FindObjectsOfType(typeof(Collider)) as Collider[];
@@ -51,7 +50,7 @@ public class initializeAgents : MonoBehaviour {
         Debug.Log(a.name + " born! Mother is " + ai.agentID);
         a.GetComponent<agentBehaviorTest>().setDNA(ai.dna, ai.mateDNA);
         a.parent = GameObject.FindGameObjectWithTag("Table").transform;
-        a.localScale = new Vector3(1f, 1f, 1f);
+        a.localScale = new Vector3(30f, 30f, 30f);
 
         //a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
 

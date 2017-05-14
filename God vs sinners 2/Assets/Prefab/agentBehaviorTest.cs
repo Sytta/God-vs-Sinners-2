@@ -91,6 +91,12 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 norm = new Vector3((float)selfSimObject.speed.x, (float)selfSimObject.speed.y, (float)selfSimObject.speed.z);
+
+        Vector2G zihui = new Vector2G(norm.z, norm.x);
+        transform.rotation = Quaternion.Euler(0, (float)(zihui.absAngle() * 180 / System.Math.PI), 0);
+
+
         if (gameObject.transform.position.y < 0)
         {
             OnDestroy();
@@ -130,6 +136,10 @@ public class agentBehaviorTest : MonoBehaviour
             // calcutate new position
             if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
                 self.velocity = self.velocity.normalized * (float)selfSimObject.getMaxSpeed();
+
+            //if (self.velocity.y > 0) self.velocity.y = 0;
+
+
             gameObject.transform.localPosition = gameObject.transform.localPosition + self.velocity * UnityEngine.Time.deltaTime;
             gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
 
@@ -186,6 +196,7 @@ public class agentBehaviorTest : MonoBehaviour
             Destroy(gameObject);
 
         }
+
     }
 
     public void setDNA(DNA dna1, DNA dna2)
