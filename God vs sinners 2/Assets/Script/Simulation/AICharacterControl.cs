@@ -12,7 +12,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 1;  // Newton
+    public double Ai = 5;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 4;
     public double minDistanceInteractionSqrt = 4*4;
@@ -81,6 +81,7 @@ public class AICharacterControl : SimulationObject
 
     public double specialActionDuration=2;
 
+    public float scale;
     public static float genRandomFloat(float min, float max)
     {
         // Perform arithmetic in double type to avoid overflowing
@@ -121,6 +122,7 @@ public class AICharacterControl : SimulationObject
 
         }
     }
+    Vector3 F1O, F2O, F3O, F4O, F5O;
     /// <summary>
     /// Basic Constructor 
     /// </summary>
@@ -128,7 +130,7 @@ public class AICharacterControl : SimulationObject
     /// <param name="foward"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
-    public AICharacterControl(Vector3G position, Vector3G foward, long idS, DNA dna)
+    public AICharacterControl(Vector3G position, Vector3G foward, long idS, DNA dna,float scale)
     {
         this.forces = new Dictionary<string, Vector3G>();
 
@@ -144,19 +146,21 @@ public class AICharacterControl : SimulationObject
         F3 = new Vector3G(0, 0, 0);
         F4 = new Vector3G(0, 0, 0);
         F5attraction = new Vector3G(0, 0, 0);
-   
+
+
+
         V = new Vector3G(0, 0, 0);
         raycastHit  = new Vector3G(1000, 1000, 1000);
 
         this.dna = dna;
         this.mateDNA = null;
-    
+        this.scale = scale;
+        Debug.Log(scale);
     // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
         state = State.WAITINGONNODE;
-
-        destination = new Vector3G(genRandomFloat(-35, 35), 0, genRandomFloat(-35, 35));
+        destination = new Vector3G(genRandomFloat((-1.0f / scale) * 0.8f, (1.0f / scale) * 0.8f), 0, genRandomFloat((-1.0f / scale) * 0.8f, (1.0f / scale) * 0.8f));
     }
 
 
@@ -259,7 +263,7 @@ public class AICharacterControl : SimulationObject
         {
             if ((destination - position).Magnitude() < 2)
             {
-                destination = new Vector3G(genRandomFloat(-45, 45), 0, genRandomFloat(-45, 45));
+                destination = new Vector3G(genRandomFloat( (-1.0f / scale) * 0.8f, (1.0f / scale) * 0.8f), 0, genRandomFloat((-1.0f / scale) * 0.8f, (1.0f / scale) * 0.8f));
             }
             F1 = destination - position;
             F1.Normalize();
@@ -288,11 +292,17 @@ public class AICharacterControl : SimulationObject
         if(panic < 0.5 && forces.ContainsKey("flee"))
             forces.Remove("flee");
 
+        F1O = Utilities.convert(F1);
+        F2O = Utilities.convert(F2);
+        F3O = Utilities.convert(F3);
+        F4O = Utilities.convert(F4);
+        F5O = Utilities.convert(F5attraction);
 
         F1.Set(0, 0, 0);
         F2.Set(0, 0, 0);
         F3.Set(0, 0, 0);
         F4.Set(0, 0, 0);
+        F5attraction.Set(0, 0, 0);
         return true;
 
     }
@@ -365,7 +375,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai / distancePed1Ped2;
+            double repulsiveFroce = Ai / (distancePed1Ped2* distancePed1Ped2);
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;

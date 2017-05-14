@@ -5,7 +5,7 @@ using UnityEngine;
 public class DNA {
 
     private string[] dnaTypes = new string[]
-    { "gender", "eyeColor", "bodyType", "headType", "armType", "legType", "morality", "stubbornness", "leadership", "dyingAge" };
+    { "gender", "eyeColor", "bodyType", "headType", "armType", "legType", "morality", "stubbornness", "weight", "dyingAge" };
     public Dictionary<string, object> dnaCharacteristics { get; set; }
 
     private const int LAST_BODY_INDEX = 5;
@@ -17,8 +17,8 @@ public class DNA {
     private const int MAX_MORALITY = 100;
     private const int MIN_STUBBORNNESS = 0;
     private const int MAX_STUBBORNNESS = 20;
-    private const int MIN_LEADERSHIP = 0;
-    private const int MAX_LEADERSHIP = 30;
+    private const int MIN_WEIGHT = 0;
+    private const int MAX_WEIGHT = 100;
     private const int MIN_DYING_AGE = 250;
     private const int MAX_DYING_AGE = 300;
 
@@ -51,7 +51,7 @@ public class DNA {
         dnaCharacteristics.Add(dnaTypes[++dnaIndex], Random.Range(MIN_STUBBORNNESS, MAX_STUBBORNNESS));
 
         // leadership - float 8
-        dnaCharacteristics.Add(dnaTypes[++dnaIndex], Random.Range(MIN_LEADERSHIP, MAX_LEADERSHIP));
+        dnaCharacteristics.Add(dnaTypes[++dnaIndex], Random.Range(MIN_WEIGHT, MAX_WEIGHT));
 
         // dyingAge - float 9
         dnaCharacteristics.Add(dnaTypes[++dnaIndex], Random.Range(MIN_DYING_AGE, MAX_DYING_AGE));
@@ -139,6 +139,11 @@ public class DNA {
     public int GetMortality()
     {
         return (int)this.dnaCharacteristics["dyingAge"];
+    }
+
+    public int GetWeight()
+    {
+        return (int)this.dnaCharacteristics["weight"];
     }
 
     public void Print()

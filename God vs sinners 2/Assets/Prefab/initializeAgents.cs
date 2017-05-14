@@ -15,15 +15,17 @@ public class initializeAgents : MonoBehaviour {
     // Use this for initialization
     public GameObject cubeObject;
 
+    public float tableSize;
     void Start () {
-
-        for (int i = 0; i < 255; i++)
+        tableSize = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
+        for (int i = 0; i < 20; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
-            a.localScale = new Vector3(30f, 30f, 30f);
-            a.localPosition = new Vector3(Random.Range(-50, 50), 1, Random.Range(-50, 50));
+            a.localScale = new Vector3(1, 1, 1  );
+
+            a.localPosition = new Vector3(Random.Range(-1.0f/tableSize*0.8f, 1.0f / tableSize * 0.8f), 1, Random.Range(-1.0f / tableSize * 0.8f, 1.0f / tableSize * 0.8f));
 
             // CHECK IF SPAWN INSIDE COLLIDER
             // Collider[] collidersList = FindObjectsOfType(typeof(Collider)) as Collider[];
@@ -48,9 +50,13 @@ public class initializeAgents : MonoBehaviour {
         a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
 
         Debug.Log(a.name + " born! Mother is " + ai.agentID);
-        a.GetComponent<agentBehaviorTest>().setDNA(ai.dna, ai.mateDNA);
+        
+        // Child settings
+        agentBehaviorTest child = a.GetComponent<agentBehaviorTest>();
+        child.setDNA(ai.dna, ai.mateDNA); 
+
         a.parent = GameObject.FindGameObjectWithTag("Table").transform;
-        a.localScale = new Vector3(30f, 30f, 30f);
+        a.localScale = new Vector3(1, 1, 1);
 
         //a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
 
