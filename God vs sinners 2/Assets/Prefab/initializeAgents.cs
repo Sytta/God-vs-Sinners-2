@@ -10,9 +10,10 @@ public class initializeAgents : MonoBehaviour {
 
     void Start () {
 
-        for (int i = 0; i < 256; i++)
+        for (int i = 0; i < 250; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
+            a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
             a.parent = GameObject.FindGameObjectWithTag("Table").transform;
             a.localScale = new Vector3(1f, 1f, 1f);
 
@@ -31,6 +32,23 @@ public class initializeAgents : MonoBehaviour {
                 }
             }
         }
+
+    }
+
+    public static void CreateChild(Transform transform, agentClassGlobal ai)
+    {
+        Transform agent1 = GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().Agent1;
+        Transform a = Instantiate(agent1, transform.position + new Vector3(Random.value * 0.05f, 0, Random.value * 0.05f), transform.rotation);
+        a.name = a.GetComponent<agentBehaviorTest>().self.agentID + "";
+
+        a.GetComponent<agentBehaviorTest>().setDNA(ai.dna, ai.mateDNA);
+        a.parent = GameObject.FindGameObjectWithTag("Table").transform;
+        a.localScale = new Vector3(1f, 1f, 1f);
+
+        //a.localPosition = new Vector3(Random.Range(-35, 35), 1, Random.Range(-35, 35));
+
+        // Finish mating
+        ai.setMating(false);
 
     }
 
