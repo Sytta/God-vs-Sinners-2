@@ -1,17 +1,53 @@
 fileFormatVersion: 2
-guid: be697b32353c7b840a7b046be267fda9
-timeCreated: 1494739302
+guid: 2a1aa7d4b625f7c49b0129932fc9eecc
+timeCreated: 1494739301
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: pCube202
-    100002: //RootNode
-    400000: pCube202
-    400002: //RootNode
-    2300000: pCube202
-    3300000: pCube202
-    4300000: pCube202
+    100000: //RootNode
+    100002: polySurface183
+    100004: polySurface184
+    100006: polySurface185
+    100008: polySurface186
+    100010: polySurface186 1
+    100012: polySurface187
+    100014: polySurface188
+    100016: polySurface189
+    100018: polySurface190
+    100020: polySurface190 1
+    100022: transform10
+    100024: transform11
+    100026: transform12
+    100028: transform13
+    100030: transform14
+    100032: transform15
+    100034: transform16
+    100036: transform17
+    100038: transform18
+    400000: //RootNode
+    400002: polySurface183
+    400004: polySurface184
+    400006: polySurface185
+    400008: polySurface186
+    400010: polySurface186 1
+    400012: polySurface187
+    400014: polySurface188
+    400016: polySurface189
+    400018: polySurface190
+    400020: polySurface190 1
+    400022: transform10
+    400024: transform11
+    400026: transform12
+    400028: transform13
+    400030: transform14
+    400032: transform15
+    400034: transform16
+    400036: transform17
+    400038: transform18
+    2300000: polySurface190
+    3300000: polySurface190
+    4300000: polySurface190
   materials:
     importMaterials: 1
     materialName: 0
