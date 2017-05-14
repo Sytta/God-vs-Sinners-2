@@ -59,7 +59,9 @@ public class inch : MonoBehaviour {
         {
             Vector3 m = collision.gameObject.transform.position - gameObject.transform.position;
 
-            GetComponent<agentBehaviorTest>().selfSimObject.goTo(Utilities.convert(m * 10), 1);
+            agentBehaviorTest bt = GetComponent<agentBehaviorTest>();
+            if (bt.selfSimObject != null)
+                bt.selfSimObject.goTo(Utilities.convert(m * 10), 1);
         }
         else if (collision.gameObject.tag == "projectile")
         {

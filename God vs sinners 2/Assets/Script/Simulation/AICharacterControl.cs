@@ -12,7 +12,7 @@ public class AICharacterControl : SimulationObject
     public double timeElapsed = 0;
     //double dt=0.03; // second
     public double Ti = 0.5; // speed 
-    public double Ai = 5;  // Newton
+    public double Ai = 0.05;  // Newton
     public double Bi = 0.5; // metres
     public double minDistanceInteraction = 4;
     public double minDistanceInteractionSqrt = 4*4;
