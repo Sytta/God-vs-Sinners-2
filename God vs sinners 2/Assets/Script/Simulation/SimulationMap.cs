@@ -282,15 +282,23 @@ public class SimulationMap
 
 
 
-    public void fleeFrom(Vector3 source, double magnitudeRadius)
+    public void fleeFrom(Vector3G source, double magnitudeRadius)
     {
-        foreach(KeyValuePair<long,SimulationObject> entry in objects)
+        foreach (KeyValuePair<long, SimulationObject> entry in objects)
         {
-            if(entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
+            if (entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
             {
-                ((AICharacterControl)entry.Value).fleeFrom(Utilities.convert(source), magnitudeRadius);
+                ((AICharacterControl)entry.Value).fleeFrom(source, magnitudeRadius);
             }
         }
+    }
+    public void fleeFrom(Vector3 source, double magnitudeRadius)
+    {
+        fleeFrom(Utilities.convert(source), magnitudeRadius);
+    }
+    public Dictionary<long,SimulationObject> getObjs()
+    {
+        return objects;
     }
 }
 

@@ -5,6 +5,13 @@ using UnityEngine;
 public class initializeAgents : MonoBehaviour {
     public Transform Agent1;
 
+
+    public int fidels=0;
+    public int infidels=0;
+    public int neutrals=0;
+    public int total=0;
+    public int nbKillings=0;
+    public int nbPreaching=0;
     // Use this for initialization
     public GameObject cubeObject;
 
@@ -64,6 +71,27 @@ public class initializeAgents : MonoBehaviour {
 
         if (this.gameObject.transform.position.y < 0)
             Destroy(this.gameObject);
+        fidels = 0;
+        infidels = 0;
+        neutrals = 0;
 
+        foreach (KeyValuePair<long, SimulationObject> entry in SimulationMap.Instance.getObjs())
+        {
+            if (entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
+            {
+                if (((AICharacterControl)entry.Value).morality < 25)
+                {
+                    infidels++;
+                }
+                else if (((AICharacterControl)entry.Value).morality > 75)
+                {
+                    fidels++;
+                }
+                else
+                    neutrals++;
+            }
+        }
     }
+
 }
+

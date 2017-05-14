@@ -63,12 +63,13 @@ public class agentBehaviorTest : MonoBehaviour
     private const float MATING_TIME = 3;
     private float matingTimeCounter = 0;
 
-    public Vector3 debug;
-    public Vector3 debug2;
-    public Vector3 debug3;
-    public float debug4;
+
+    public double debug;
+    public double debug2;
+    public bool debug3;
+    public AICharacterControl debug4;
     public bool debug5;
-    public float debug6;
+    public double debug6;
     // Use this for initialization
     void Start()
     {
@@ -119,7 +120,7 @@ public class agentBehaviorTest : MonoBehaviour
                     initializeAgents.CreateChild(gameObject.transform, self);
                 }
             }
-        } else {
+        } else if (!selfSimObject.isBeingLocked) {
             // calcutate new position
             if (self.velocity.magnitude > selfSimObject.getMaxSpeed())
                 self.velocity = self.velocity.normalized * (float)selfSimObject.getMaxSpeed();
@@ -133,10 +134,12 @@ public class agentBehaviorTest : MonoBehaviour
             }
         }
 
-        debug = Utilities.convert(selfSimObject.destination);
-        debug2 = self.velocity;
-        debug3 = Utilities.convert(selfSimObject.V);
-        debug4 = (float)selfSimObject.age;
+        debug = selfSimObject.morality;
+        debug2 = selfSimObject.specialActionCooldown;
+        debug3 = selfSimObject.specialActionStarted;
+        debug4 = selfSimObject.specialActionTarget;
+        debug5 = selfSimObject.isBeingLocked;
+        debug6 = selfSimObject.specialActionDuration;
         gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         Vector3G posVector3G = Utilities.convert(gameObject.transform.localPosition);
@@ -174,8 +177,6 @@ public class agentBehaviorTest : MonoBehaviour
         if (selfSimObject.isDead())
         {
 
-            Debug.Log("ID:" +self.agentID+ " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death:  " + selfSimObject.getDeathCauseString());
-
             Destroy(gameObject);
 
         }
@@ -202,7 +203,9 @@ public class agentBehaviorTest : MonoBehaviour
         {
             Debug.Log("ID:" + self.agentID + " Dead at the sweet age of:" + selfSimObject.age + ". Cause of death: UNKNOWN");
         }
-            SimulationMap.Instance.remove(self.agentID);
+        selfSimObject.end();
+        SimulationMap.Instance.remove(self.agentID);
+        
         GameObject.Destroy(gameObject);
     }
 }
