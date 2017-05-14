@@ -275,7 +275,7 @@ public class agentBehaviorTest : MonoBehaviour
     {
         if (selfSimObject != null)
         {
-            Instantiate(gore, transform.position, transform.rotation);
+            GameObject obj = Instantiate(gore, transform.position, transform.rotation);
 
             if (selfSimObject.isDead())
             {

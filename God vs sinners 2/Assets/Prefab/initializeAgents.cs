@@ -114,5 +114,30 @@ public class initializeAgents : MonoBehaviour {
         }
     }
 
+    public Transform death, love, preach;
+
+    public void createBubble(Transform agent, int type)
+    {
+        Transform toUse;
+        if (type == 0)
+        {
+            toUse = death;
+        }
+        else if (type == 1)
+        {
+            toUse = love;
+        }
+        else
+            toUse = preach;
+        Transform a = Instantiate(toUse, agent.position, agent.rotation);
+        a.parent = agent;
+
+        a.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        a.localPosition = a.localPosition + new Vector3(0, 5, 0);
+
+
+    }
+
+
 }
 
