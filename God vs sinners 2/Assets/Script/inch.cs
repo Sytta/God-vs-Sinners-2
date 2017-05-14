@@ -8,11 +8,23 @@ public class inch : MonoBehaviour {
 	void Start () {
 		
 	}
-	
+
+    //public static Vector3 previous = new Vector3(0, 0, 0);
+
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        //Vector3 velocity = (transform.position - previous).normalized;
+        //previous = transform.position;
+
+       // Vector3 norm = gameObject.GetComponent<Rigidbody>().velocity.normalized;
+
+       // Vector2G zihui = new Vector2G(norm.x, norm.z);
+        //transform.rotation = Quaternion.Euler(gameObject.GetComponent<Rigidbody>().velocity.x, (float)(zihui.absAngle() * (180 / System.Math.PI)), gameObject.GetComponent<Rigidbody>().velocity.z);
+        //transform.rotation = Quaternion.Euler(gameObject.GetComponent<Rigidbody>().velocity.x, (float)(zihui.absAngle() * (180 / System.Math.PI)), gameObject.GetComponent<Rigidbody>().velocity.z);
+
+
+
+    }
 
     void OnCollisionEnter(Collision collision)
     {
