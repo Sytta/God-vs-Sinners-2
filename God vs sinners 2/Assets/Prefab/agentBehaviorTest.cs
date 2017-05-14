@@ -133,7 +133,7 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        debug3 = self.isMating();
         if (selfSimObject.preachFlag)
         {
             selfSimObject.preachFlag = false;
@@ -183,10 +183,10 @@ public class agentBehaviorTest : MonoBehaviour
             }
             else
             {
-                //if (!self.dna.IsMale())
-                //{
-                initializeAgents.CreateChild(gameObject.transform, self);
-                //}
+                if (!self.dna.IsMale())
+                {
+                    initializeAgents.CreateChild(gameObject.transform, self);
+                }
 
                 //self.setMating(false);
                 this.matingTimeCounter = MATING_TIME;

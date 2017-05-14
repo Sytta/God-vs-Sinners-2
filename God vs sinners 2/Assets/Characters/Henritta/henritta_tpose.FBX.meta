@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0e2f84730d14181419cabcbf87458b81
-timeCreated: 1494774837
+guid: 6f605ce34031cea469f89b95c8355b44
+timeCreated: 1494782479
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -38,13 +38,13 @@ ModelImporter:
     100060: Bip001 R UpperArm
     100062: Bip001 Spine
     100064: Bip001 Spine1
-    100066: //RootNode
-    100068: fem_head_mesh
-    100070: FL_head_mesh
-    100072: FL_left_arm_mesh
-    100074: FL_legs_mesh
-    100076: FL_right_arm_mesh
-    100078: FL_torso_mesh
+    100066: Box003
+    100068: fem_arm_left_mesh
+    100070: fem_arm_right_mesh
+    100072: fem_head_mesh
+    100074: fem_legs_mesh
+    100076: fem_torso_mesh
+    100078: //RootNode
     400000: Bip001
     400002: Bip001 L Calf
     400004: Bip001 L Clavicle
@@ -78,25 +78,24 @@ ModelImporter:
     400060: Bip001 R UpperArm
     400062: Bip001 Spine
     400064: Bip001 Spine1
-    400066: //RootNode
-    400068: fem_head_mesh
-    400070: FL_head_mesh
-    400072: FL_left_arm_mesh
-    400074: FL_legs_mesh
-    400076: FL_right_arm_mesh
-    400078: FL_torso_mesh
-    4300000: FL_legs_mesh
-    4300002: FL_torso_mesh
-    4300004: FL_head_mesh
-    4300006: FL_left_arm_mesh
-    4300008: FL_right_arm_mesh
-    7400000: Take 001
+    400066: Box003
+    400068: fem_arm_left_mesh
+    400070: fem_arm_right_mesh
+    400072: fem_head_mesh
+    400074: fem_legs_mesh
+    400076: fem_torso_mesh
+    400078: //RootNode
+    4300000: fem_legs_mesh
+    4300002: Box003
+    4300004: fem_arm_right_mesh
+    4300006: fem_torso_mesh
+    4300008: fem_arm_left_mesh
     9500000: //RootNode
-    13700000: FL_head_mesh
-    13700002: FL_left_arm_mesh
-    13700004: FL_legs_mesh
-    13700006: FL_right_arm_mesh
-    13700008: FL_torso_mesh
+    13700000: Box003
+    13700002: fem_arm_left_mesh
+    13700004: fem_arm_right_mesh
+    13700006: fem_legs_mesh
+    13700008: fem_torso_mesh
   materials:
     importMaterials: 1
     materialName: 0

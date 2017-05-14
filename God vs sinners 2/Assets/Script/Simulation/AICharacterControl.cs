@@ -155,7 +155,6 @@ public class AICharacterControl : SimulationObject
         this.dna = dna;
         this.mateDNA = null;
         this.scale = scale;
-        Debug.Log(scale);
     // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
@@ -333,10 +332,9 @@ public class AICharacterControl : SimulationObject
         if (isMating && hasMate)
         {
             isMating = false;
-            mate.isMating = false;
 
             hasMated = true;
-            mate.hasMated = true;
+            Debug.Log(id + " sending it's dna!");
             return mateDNA;
         }
         else
@@ -376,7 +374,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai / (distancePed1Ped2);
+            double repulsiveFroce = Ai * Math.Exp((distancePed1Ped2));
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
@@ -396,7 +394,7 @@ public class AICharacterControl : SimulationObject
             }
             else if (agent == mate)
             {
-                F5attraction =  n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -2;
                 if (distancePed1Ped2 < 1)
                 {
                     isMating = true;
@@ -435,7 +433,7 @@ public class AICharacterControl : SimulationObject
             }
             if (specialActionStarted && agent == specialActionTarget)
             {
-                F5attraction =  n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -2;
             }
         }
     }
