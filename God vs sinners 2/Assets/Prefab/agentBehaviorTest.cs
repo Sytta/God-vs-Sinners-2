@@ -269,10 +269,14 @@ public class agentBehaviorTest : MonoBehaviour
         }
     }
 
+    public GameObject gore;
+
     void OnDestroy()
     {
         if (selfSimObject != null)
         {
+            Instantiate(gore, transform.position, transform.rotation);
+
             if (selfSimObject.isDead())
             {
 

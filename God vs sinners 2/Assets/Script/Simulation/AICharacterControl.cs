@@ -79,7 +79,7 @@ public class AICharacterControl : SimulationObject
 
     public bool isBeingLocked = false;
 
-    public double specialActionDuration=2;
+    public double specialActionDuration=3;
 
     public float scale;
     public static float genRandomFloat(float min, float max)
@@ -236,7 +236,7 @@ public class AICharacterControl : SimulationObject
                 specialActionStarted = false;
                 specialActionTarget = null;
                 isBeingLocked = false;
-                specialActionDuration = 2;
+                specialActionDuration = 3;
             }
         }
 
@@ -334,7 +334,6 @@ public class AICharacterControl : SimulationObject
             isMating = false;
 
             hasMated = true;
-            Debug.Log(id + " sending it's dna!");
             return mateDNA;
         }
         else
@@ -394,7 +393,7 @@ public class AICharacterControl : SimulationObject
             }
             else if (agent == mate)
             {
-                F5attraction = (double)(repulsiveFroce) * n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -4;
                 if (distancePed1Ped2 < 1)
                 {
                     isMating = true;
@@ -402,7 +401,7 @@ public class AICharacterControl : SimulationObject
                 }
             }
 
-            if(!isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
+            if(!isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5 && age > 20)
             {
                 if (morality < 25)
                 {
@@ -416,7 +415,7 @@ public class AICharacterControl : SimulationObject
                         killFlag = true;
                     }
                 }
-                else
+                else if (morality > 75)
                 {
                     if(panic < 3 && agent.panic < 3 && agent.morality+5< morality)
                     {
@@ -433,7 +432,7 @@ public class AICharacterControl : SimulationObject
             }
             if (specialActionStarted && agent == specialActionTarget)
             {
-                F5attraction = (double)(repulsiveFroce) * n * -2;
+                F5attraction = (double)(repulsiveFroce) * n * -4;
             }
         }
     }
