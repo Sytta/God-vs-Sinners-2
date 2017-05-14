@@ -155,7 +155,6 @@ public class AICharacterControl : SimulationObject
         this.dna = dna;
         this.mateDNA = null;
         this.scale = scale;
-        Debug.Log(scale);
     // get the components on the object we need ( should not be null due to require component so no need to check )
         id = idS;   
         minDistanceInteractionSqrt = minDistanceInteraction * minDistanceInteraction;
@@ -333,10 +332,9 @@ public class AICharacterControl : SimulationObject
         if (isMating && hasMate)
         {
             isMating = false;
-            mate.isMating = false;
 
             hasMated = true;
-            mate.hasMated = true;
+            Debug.Log(id + " sending it's dna!");
             return mateDNA;
         }
         else
