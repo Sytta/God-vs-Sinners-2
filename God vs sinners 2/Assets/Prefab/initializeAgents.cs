@@ -18,7 +18,7 @@ public class initializeAgents : MonoBehaviour {
     public float tableSize;
     void Start () {
         tableSize = GameObject.FindGameObjectWithTag("Table").transform.localScale.x;
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             Transform a = Instantiate(Agent1, transform.position, transform.rotation);
             a.name = a.GetComponent<agentBehaviorTest>().self.agentID+"";
@@ -80,17 +80,33 @@ public class initializeAgents : MonoBehaviour {
         infidels = 0;
         neutrals = 0;
 
+        GameObject score = GameObject.Find("Score");
+        scoreKeeping scoreKeepingInstance = score.GetComponent<scoreKeeping>();
+        scoreKeepingInstance.moralityScore = 0;
+        scoreKeepingInstance.infidelsAlive = 0;
+        scoreKeepingInstance.religiousAlive = 0;
+        scoreKeepingInstance.moralityMax = 0;
+
         foreach (KeyValuePair<long, SimulationObject> entry in SimulationMap.Instance.getObjs())
         {
+
+
             if (entry.Value.getType() == SimulationObject.OBJECTTYPE.PED)
             {
+                scoreKeepingInstance.moralityScore += (int)((AICharacterControl)entry.Value).morality - 50;
+                scoreKeepingInstance.moralityMax += 50;
+
                 if (((AICharacterControl)entry.Value).morality < 25)
                 {
                     infidels++;
+                    scoreKeepingInstance.infidelsAlive++;
+
                 }
                 else if (((AICharacterControl)entry.Value).morality > 75)
                 {
                     fidels++;
+                    scoreKeepingInstance.religiousAlive++;
+
                 }
                 else
                     neutrals++;
