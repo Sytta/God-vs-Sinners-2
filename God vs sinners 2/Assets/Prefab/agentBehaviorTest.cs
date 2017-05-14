@@ -133,8 +133,22 @@ public class agentBehaviorTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(self.agentID == idToCatch)
+
+        if (selfSimObject.preachFlag)
+        {
+            selfSimObject.preachFlag = false;
+            GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().createBubble(transform, 2);
+
+        }
+
+        if (selfSimObject.killFlag)
+        {
+            selfSimObject.killFlag = false;
+            GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().createBubble(transform, 0);
+
+        }
+
+        if (self.agentID == idToCatch)
         {
             idToCatch.GetHashCode();
         }
@@ -163,7 +177,6 @@ public class agentBehaviorTest : MonoBehaviour
         // When mating (during 3 seconds), the 2 avatars don't move
         if (self.isMating())
         {
-            Debug.Log(self.agentID + "is mating");
             if (this.matingTimeCounter < MATING_TIME)
             {
                 this.matingTimeCounter += UnityEngine.Time.deltaTime;
@@ -219,6 +232,8 @@ public class agentBehaviorTest : MonoBehaviour
             if (!self.isMating())
             {
                 self.setMating(true);
+                GameObject.FindGameObjectWithTag("Spawner").GetComponent<initializeAgents>().createBubble(transform, 1);
+
             }
         }
 

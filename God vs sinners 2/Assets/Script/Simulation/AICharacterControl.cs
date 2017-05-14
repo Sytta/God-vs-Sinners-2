@@ -349,6 +349,7 @@ public class AICharacterControl : SimulationObject
 
     public double panicTransmission = 5;
     public double deltaPanic = 0;
+    public bool killFlag, preachFlag;
     /// <summary>
     /// Interact with another character
     /// </summary>
@@ -375,7 +376,7 @@ public class AICharacterControl : SimulationObject
             }
 
             double distancePed1Ped2 = deltaVec.Magnitude();
-            double repulsiveFroce = Ai / (distancePed1Ped2* distancePed1Ped2);
+            double repulsiveFroce = Ai / (distancePed1Ped2);
             Vector3G n = deltaVec / distancePed1Ped2;
 
             F2 += (double)(repulsiveFroce) * n;
@@ -395,7 +396,7 @@ public class AICharacterControl : SimulationObject
             }
             else if (agent == mate)
             {
-                F5attraction = (double)(repulsiveFroce) * n * -2;
+                F5attraction =  n * -2;
                 if (distancePed1Ped2 < 1)
                 {
                     isMating = true;
@@ -403,7 +404,7 @@ public class AICharacterControl : SimulationObject
                 }
             }
 
-            if(!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
+            if(!isBeingLocked &&!agent.isBeingLocked && specialActionCooldown <= 0 && !specialActionStarted && dna.GetMortality()-age > 5)
             {
                 if (morality < 25)
                 {
@@ -414,6 +415,7 @@ public class AICharacterControl : SimulationObject
                         specialActionStarted = true;
                         agent.isBeingLocked = true;
                         specialActionTarget = agent;
+                        killFlag = true;
                     }
                 }
                 else
@@ -425,6 +427,7 @@ public class AICharacterControl : SimulationObject
                         specialActionStarted = true;
                         agent.isBeingLocked = true;
                         specialActionTarget = agent;
+                        preachFlag= true;
                     }
                     
                 }
@@ -432,7 +435,7 @@ public class AICharacterControl : SimulationObject
             }
             if (specialActionStarted && agent == specialActionTarget)
             {
-                F5attraction = (double)(repulsiveFroce) * n * -2;
+                F5attraction =  n * -2;
             }
         }
     }
